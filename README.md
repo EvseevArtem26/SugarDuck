@@ -1,8 +1,9 @@
 # SugarDuck
 
-Mobile app for managing personal budget and monitoring the market situation.
+## Описание проекта
+SugarDuck - это мобильное приложение, которое повышает финансовую грамотность населения, позволяя отслеживать расходы и доходы. Помимо этого, в приложении можно узнать курсы валют и новости из мира финансов.
 
-# Contibutors 
+## Участники проекта
 
 - [Евсеев Артём](https://github.com/EvseevArtem26)
 - [Колотушкин Данил](https://github.com/vrodedanya)
