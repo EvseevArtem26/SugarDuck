@@ -9,3 +9,5 @@ SugarDuck - это мобильное приложение, которое по�
 - [Колотушкин Данил](https://github.com/vrodedanya)
 - [Кишинская Зоя](https://github.com/zoechcaa)
 - [Фёдорова Диана](https://github.com/FedorovaDianaY2337)
+
+### [Макет приложения](https://www.figma.com/file/Ap90d1sVSr7blBq4KwYaB2/Утиные-финансы?node-id=0%3A1)
