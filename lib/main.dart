@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,54 +16,304 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      
+			initialRoute: '/home',
+			routes: {
+        // '/': (context) => AuthPage(),
+        '/home': (context) => HomePage(title: "Главная"),
+			}
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  int _bottomNavBarIndex = 0;
+  Map<String, double> dataMap = {
+    "Доходы": 50,
+    "Расходы": 50,
+  };
+  List<Color> colorList = const [
+    Color.fromARGB(255, 138, 164, 255),
+    Color.fromARGB(255, 50, 76, 167)
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+				centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 26, 26, 46),
       ),
-      body: Center(
+      body: Container(
+        alignment: Alignment.center,
+        color: Color.fromARGB(255, 26, 26, 46),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+					crossAxisAlignment:  CrossAxisAlignment.center,
+					mainAxisAlignment: MainAxisAlignment.spaceBetween,
+					children: [
+            // Баланс
+						Container(
+							width: double.infinity,
+							height:  MediaQuery.of(context).size.height*0.1,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+							child: Column(
+							  children: [
+                  const Divider(
+                    color: Color.fromARGB(255, 46, 46, 66),
+                    thickness: 2,
+                  ),
+							    Row(
+							    	mainAxisAlignment: MainAxisAlignment.spaceAround,
+							    	crossAxisAlignment: CrossAxisAlignment.center,
+							    	children: const [
+							    		Text(
+                    "Баланс:",
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
+							    		Text(
+                    "нищий",
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  )
+							    	],
+							    ),
+                  const Divider(
+                    color: Color.fromARGB(255, 46, 46, 66),
+                    thickness: 2,
+                  ),
+							  ],
+							)
+						),
+            // Диаграмма
+						Container(
+							width: double.infinity,
+							height: MediaQuery.of(context).size.height*0.35,
+              child: PieChart(
+                dataMap: dataMap,
+                colorList: colorList,
+                chartType: ChartType.ring,
+                chartRadius: 170,
+                legendOptions: LegendOptions(
+                  showLegends: false
+                ),
+              )
+						),
+						// Тип бюджета
+            Container(
+							width: double.infinity,
+							height:  MediaQuery.of(context).size.height*0.05,
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.spaceAround,
+								crossAxisAlignment: CrossAxisAlignment.center,
+								children: const [
+									Text(
+                    "Тип бюджета:",
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                    ),
+									Text(
+                    "дефицитный",
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  )
+								],
+							)
+						),
+            // Расходы/доходы
+						Container(
+							width: double.infinity,
+							height: MediaQuery.of(context).size.height*0.3,
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+								crossAxisAlignment: CrossAxisAlignment.center,
+								children: [
+									Container(
+										width: 150,
+										height:  MediaQuery.of(context).size.height*0.15,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 34, 34, 54),
+                      borderRadius: BorderRadius.circular(18)
+                    ),
+										child: Row(
+										  children: [
+                        Container(
+                          width: 10,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 138, 164, 255),
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
+                          ),
+                        ),
+										    Container(
+                          width: 140,
+                          height: double.infinity,
+                          padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+										      child: Column(
+										      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										      	crossAxisAlignment: CrossAxisAlignment.start,
+										      	children: [
+										      		Row(
+										      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										      			children: const [
+										      				Text(
+                                    "Доходы",
+                                    style: TextStyle(
+                                      color: Colors.white
+                                    ),
+                                  ),
+										      				Icon(
+                                    Icons.chevron_right,
+                                    color: Color.fromARGB(255, 141, 147, 171)
+                                  )
+										      			],
+										      		),
+										      		const Text(
+                                "5 операций",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+										      		Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+										      		  children: const [
+										      		    Text(
+                                "1000 рублей",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+										      		  ],
+										      		)
+										      	],
+										      ),
+										    ),
+										  ],
+										)
+									),
+									Container(
+										width: 150,
+										height:  MediaQuery.of(context).size.height*0.15,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 34, 34, 54),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+										child: Row(
+										  children: [
+                        Container(
+                          width: 10,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 50, 76, 167),
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
+                          ),
+                        ),
+										    Container(
+                          width: 140,
+                          height: double.infinity,
+                          padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+										      child: Column(
+										      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										      	crossAxisAlignment: CrossAxisAlignment.start,
+										      	children: [
+										      		Row(
+										      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										      			children: const [
+										      				Text(
+                                    "Расходы",
+                                    style: TextStyle(
+                                      color: Colors.white
+                                    ),
+                                  ),
+										      				Icon(
+                                    Icons.chevron_right,
+                                    color: Color.fromARGB(255, 141, 147, 171)
+                                  )
+										      			],
+										      		),
+										      		const Text(
+                                "6 операций",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+										      		Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+										      		  children: const[
+										      		    Text(
+                                "1200 рублей",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+										      		  ],
+										      		)
+										      	],
+										      ),
+										    ),
+										  ],
+										)
+									),
+								],
+							)
+						)
+					]
+				)
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+			bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _bottomNavBarIndex,
+        onTap: (int index) {
+          setState(() {
+            _bottomNavBarIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Новости",
+            backgroundColor: Color.fromARGB(255, 34, 34, 54),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Курсы валют",  
+            backgroundColor: Color.fromARGB(255, 34, 34, 54),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Главная",
+            backgroundColor: Color.fromARGB(255, 34, 34, 54),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Настройки",
+            backgroundColor: Color.fromARGB(255, 34, 34, 54),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: "Профиль",
+            backgroundColor: Color.fromARGB(255, 34, 34, 54),
+          ),
+        ],
+        showSelectedLabels: false,
+        unselectedItemColor: Color.fromARGB(255, 141, 147, 171),
+        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
       ),
+      
     );
   }
 }
