@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import './components/navbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,17 +78,17 @@ class _HomePageState extends State<HomePage> {
 							    	crossAxisAlignment: CrossAxisAlignment.center,
 							    	children: const [
 							    		Text(
-                    "Баланс:",
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
+                        "Баланс:",
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
+                      ),
 							    		Text(
-                    "нищий",
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  )
+                        "нищий",
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
+                      )
 							    	],
 							    ),
                   const Divider(
@@ -138,19 +139,31 @@ class _HomePageState extends State<HomePage> {
 						Container(
 							width: double.infinity,
 							height: MediaQuery.of(context).size.height*0.3,
-							child: Row(
-								mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-								crossAxisAlignment: CrossAxisAlignment.center,
-								children: [
-									Container(
-										width: 150,
-										height:  MediaQuery.of(context).size.height*0.15,
+							child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+							  children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: const Divider(
+                      color: Color.fromARGB(255, 46, 46, 66),
+                      thickness: 2,
+                      indent: 0,
+                      endIndent: 0,
+                    ),
+                  ),
+							    Row(
+							    	mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+							    	crossAxisAlignment: CrossAxisAlignment.center,
+							    	children: [
+							    		Container(
+							    			width: 150,
+							    			height:  MediaQuery.of(context).size.height*0.15,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 34, 34, 54),
                       borderRadius: BorderRadius.circular(18)
                     ),
-										child: Row(
-										  children: [
+							    			child: Row(
+							    			  children: [
                         Container(
                           width: 10,
                           height: double.infinity,
@@ -159,61 +172,61 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
                           ),
                         ),
-										    Container(
+							    			    Container(
                           width: 140,
                           height: double.infinity,
                           padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
-										      child: Column(
-										      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										      	crossAxisAlignment: CrossAxisAlignment.start,
-										      	children: [
-										      		Row(
-										      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										      			children: const [
-										      				Text(
+							    			      child: Column(
+							    			      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							    			      	crossAxisAlignment: CrossAxisAlignment.start,
+							    			      	children: [
+							    			      		Row(
+							    			      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							    			      			children: const [
+							    			      				Text(
                                     "Доходы",
                                     style: TextStyle(
                                       color: Colors.white
                                     ),
                                   ),
-										      				Icon(
+							    			      				Icon(
                                     Icons.chevron_right,
                                     color: Color.fromARGB(255, 141, 147, 171)
                                   )
-										      			],
-										      		),
-										      		const Text(
+							    			      			],
+							    			      		),
+							    			      		const Text(
                                 "5 операций",
                                 style: TextStyle(
                                   color: Colors.white
                                 ),
                               ),
-										      		Row(
+							    			      		Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-										      		  children: const [
-										      		    Text(
+							    			      		  children: const [
+							    			      		    Text(
                                 "1000 рублей",
                                 style: TextStyle(
                                   color: Colors.white
                                 ),
                               ),
-										      		  ],
-										      		)
-										      	],
-										      ),
-										    ),
-										  ],
-										)
-									),
-									Container(
-										width: 150,
-										height:  MediaQuery.of(context).size.height*0.15,
+							    			      		  ],
+							    			      		)
+							    			      	],
+							    			      ),
+							    			    ),
+							    			  ],
+							    			)
+							    		),
+							    		Container(
+							    			width: 150,
+							    			height:  MediaQuery.of(context).size.height*0.15,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 34, 34, 54),
                       borderRadius: BorderRadius.circular(18),
                     ),
-										child: Row(
-										  children: [
+							    			child: Row(
+							    			  children: [
                         Container(
                           width: 10,
                           height: double.infinity,
@@ -222,97 +235,61 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
                           ),
                         ),
-										    Container(
+							    			    Container(
                           width: 140,
                           height: double.infinity,
                           padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
-										      child: Column(
-										      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										      	crossAxisAlignment: CrossAxisAlignment.start,
-										      	children: [
-										      		Row(
-										      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
-										      			children: const [
-										      				Text(
+							    			      child: Column(
+							    			      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							    			      	crossAxisAlignment: CrossAxisAlignment.start,
+							    			      	children: [
+							    			      		Row(
+							    			      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							    			      			children: const [
+							    			      				Text(
                                     "Расходы",
                                     style: TextStyle(
                                       color: Colors.white
                                     ),
                                   ),
-										      				Icon(
+							    			      				Icon(
                                     Icons.chevron_right,
                                     color: Color.fromARGB(255, 141, 147, 171)
                                   )
-										      			],
-										      		),
-										      		const Text(
+							    			      			],
+							    			      		),
+							    			      		const Text(
                                 "6 операций",
                                 style: TextStyle(
                                   color: Colors.white
                                 ),
                               ),
-										      		Row(
+							    			      		Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-										      		  children: const[
-										      		    Text(
+							    			      		  children: const[
+							    			      		    Text(
                                 "1200 рублей",
                                 style: TextStyle(
                                   color: Colors.white
                                 ),
                               ),
-										      		  ],
-										      		)
-										      	],
-										      ),
-										    ),
-										  ],
-										)
-									),
-								],
+							    			      		  ],
+							    			      		)
+							    			      	],
+							    			      ),
+							    			    ),
+							    			  ],
+							    			)
+							    		),
+							    	],
+							    ),
+							  ],
 							)
 						)
 					]
 				)
       ),
-			bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _bottomNavBarIndex,
-        onTap: (int index) {
-          setState(() {
-            _bottomNavBarIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Новости",
-            backgroundColor: Color.fromARGB(255, 34, 34, 54),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Курсы валют",  
-            backgroundColor: Color.fromARGB(255, 34, 34, 54),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Главная",
-            backgroundColor: Color.fromARGB(255, 34, 34, 54),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Настройки",
-            backgroundColor: Color.fromARGB(255, 34, 34, 54),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: "Профиль",
-            backgroundColor: Color.fromARGB(255, 34, 34, 54),
-          ),
-        ],
-        showSelectedLabels: false,
-        unselectedItemColor: Color.fromARGB(255, 141, 147, 171),
-        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
-      ),
+			bottomNavigationBar: const NavBar()
       
     );
   }
