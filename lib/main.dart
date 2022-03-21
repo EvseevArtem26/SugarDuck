@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:card_swiper/card_swiper.dart';
 import './components/navbar.dart';
 
 void main() {
@@ -102,14 +103,39 @@ class _HomePageState extends State<HomePage> {
 						Container(
 							width: double.infinity,
 							height: MediaQuery.of(context).size.height*0.35,
-              child: PieChart(
-                dataMap: dataMap,
-                colorList: colorList,
-                chartType: ChartType.ring,
-                chartRadius: 170,
-                legendOptions: LegendOptions(
-                  showLegends: false
-                ),
+              child: Swiper(
+                itemBuilder:(BuildContext context, int index){
+                  return Stack(
+                    children: [
+                      PieChart(
+                        dataMap: dataMap,
+                        colorList: colorList,
+                        chartType: ChartType.ring,
+                        chartRadius: 170,
+                        legendOptions: LegendOptions(
+                          showLegends: false
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          "cентябрь\n2022",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            
+                          )
+                        ),
+                      )
+                    ]
+                  );
+                },
+                itemCount: 3, 
+                loop: false,
+                control: SwiperControl(
+                  color: Color.fromARGB(255, 141, 147, 171),
+                  disableColor: Colors.transparent,
+                  padding: EdgeInsets.all(10),
+                )
               )
 						),
 						// Тип бюджета
