@@ -8,6 +8,9 @@ class Category extends StatelessWidget {
   double borderRadius;
   Color color;
   Color? sideColor;
+  String title;
+  int amount;
+  double sum;
 
   Category({
     Key? key,
@@ -16,7 +19,10 @@ class Category extends StatelessWidget {
     this.padding = 20,
     this.borderRadius = 18,
     this.color = const Color.fromARGB(255, 34, 34, 54),
-    this.sideColor
+    this.sideColor,
+    required this.title,
+    required this.amount,
+    required this.sum
   }):super(key: key);
 
   @override
@@ -44,19 +50,20 @@ class Category extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(padding-10, padding/2, padding, padding/2),
             child: Row(
               children: [
-                Flexible(
-                  flex: 30,
+                Expanded(
+                  flex: 40,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        "Зарплата",
-                        style: TextStyle(
+                        title,
+                        softWrap: false,
+                        style: const TextStyle(
                           color: Colors.white
                         )
                       ),
                       Text(
-                        "10 операций",
+                        "$amount операций",
                         softWrap: false,
                         style: TextStyle(
                           color: Colors.white
@@ -65,19 +72,19 @@ class Category extends StatelessWidget {
                     ],
                   )
                 ),
-                const Spacer(flex: 40),
-                Flexible(
-                  flex: 30,
+                const Spacer(flex: 30),
+                Expanded(
+                  flex: 35,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        "500 RUB",
-                        style: TextStyle(
+                        "$sum RUB",
+                        style: const TextStyle(
                           color: Colors.white
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.chevron_right,
                         color: Color.fromARGB(255, 141, 147, 171),
                       ),
