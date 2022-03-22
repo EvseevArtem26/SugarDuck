@@ -6,13 +6,15 @@ import './components/category.dart';
 
 
 class IncomePage extends StatefulWidget {
-  const IncomePage({ Key? key }) : super(key: key);
+  int initialType;
+  IncomePage({ Key? key, this.initialType=0 }) : super(key: key);
 
   @override
-  State<IncomePage> createState() => _IncomePageState();
+  State<IncomePage> createState() => _IncomePageState(type: initialType);
 }
 
 class _IncomePageState extends State<IncomePage> {
+  _IncomePageState({this.type=0});
 
   List<String> titles = ["доходы", "расходы"];
   List<Map<String, double>> dataMap = [
@@ -23,10 +25,10 @@ class _IncomePageState extends State<IncomePage> {
       "Прочие доходы": 500
     },
     {
-      "Одежда": 500,
+      "Одежда": 900,
       "Еда и напитки": 500,
-      "Развлечения": 500,
-      "Прочие расходы": 500
+      "Развлечения": 300,
+      "Прочие расходы": 200
     }
   ];
   List<List<Color>> ColorList = const [
@@ -43,7 +45,7 @@ class _IncomePageState extends State<IncomePage> {
       Color.fromARGB(255, 122, 122, 122),
     ]
   ];
-  int type = 0;
+  int type;
   List<Widget> getCategories(int type){
     List<Widget> categories = List.generate(4, (index) => Category(
       amount: 10,
