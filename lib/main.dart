@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:card_swiper/card_swiper.dart';
 import './components/navbar.dart';
+import 'income.dart';
+import 'category.dart';
+import 'operation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +22,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       
-			initialRoute: '/home',
+			initialRoute: '/operation',
 			routes: {
         // '/': (context) => AuthPage(),
         '/home': (context) => HomePage(title: "Главная"),
+        '/income': (context) => IncomePage(),
+        '/category': (context) => CategoryPage(title: "Категория"),
+        '/operation': (context) => OperationPage()
 			}
     );
   }
@@ -184,25 +190,25 @@ class _HomePageState extends State<HomePage> {
 							    		Container(
 							    			width: 150,
 							    			height:  MediaQuery.of(context).size.height*0.15,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 34, 34, 54),
-                      borderRadius: BorderRadius.circular(18)
-                    ),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 34, 34, 54),
+                          borderRadius: BorderRadius.circular(18)
+                        ),
 							    			child: Row(
 							    			  children: [
-                        Container(
-                          width: 10,
-                          height: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 138, 164, 255),
-                            borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
-                          ),
-                        ),
+                            Container(
+                              width: 10,
+                              height: double.infinity,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 138, 164, 255),
+                                borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
+                              ),
+                            ),
 							    			    Container(
-                          width: 140,
-                          height: double.infinity,
-                          padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
-							    			      child: Column(
+                              width: 140,
+                              height: double.infinity,
+                              padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+                                  child: Column(
 							    			      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
 							    			      	crossAxisAlignment: CrossAxisAlignment.start,
 							    			      	children: [
