@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class OperationPage extends StatefulWidget {
   const OperationPage({ Key? key }) : super(key: key);
@@ -24,6 +24,41 @@ class _OperationPageState extends State<OperationPage> {
     ]
   };
   late String selectedCategory = categories["income"]![0];
+
+  List<DropdownMenuItem<String>> getCategoryItems(String group){
+    List<String> titles = categories[group]!;
+    List<DropdownMenuItem<String>> items = [];
+    for (var title in titles){
+      items.addAll(
+        [
+          DropdownMenuItem(
+            value: title,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                )
+              ),
+            ),
+            alignment: Alignment.center,
+          ),
+          if (title != titles.last)
+          const DropdownMenuItem<String>(
+            enabled: false,
+            child: Divider(
+              color: Color.fromARGB(255, 34, 34, 54),
+              thickness: 2,
+              height: 1,
+            ),
+          ),
+        ]
+      );
+    }
+    return items;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +68,12 @@ class _OperationPageState extends State<OperationPage> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 26, 26, 46),
+        elevation: 0,
       ),
       body: Container(
         width: double.infinity,
         alignment: Alignment.center,
-        color: const Color.fromARGB(255, 26, 26, 46),
+        color: Color.fromARGB(255, 26, 26, 46),
         child: Column(
           children: [
             const Divider(
@@ -45,24 +81,30 @@ class _OperationPageState extends State<OperationPage> {
               indent: 20,
               endIndent: 20,
               thickness: 2,
+              height: 2
             ),
             Form(
               child: Column(
                 children: [
-                  const Text(
-                    "Название операции",
-                    style: TextStyle(
-                      color: Colors.white
+                  Container(
+                    margin: const EdgeInsets.only(top: 15, bottom: 10, left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      "Название операции",
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
                     ),
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
                       constraints: BoxConstraints.tightFor(
                         width: 320,
-                        height: 60
+                        height: 40
                       ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 2,
                           color: Color.fromARGB(255, 46, 46, 66),
@@ -70,53 +112,88 @@ class _OperationPageState extends State<OperationPage> {
                       ),
                       fillColor: Color.fromARGB(255, 34, 34, 54),
                       filled: true,
+
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 2,
                           color: Color.fromARGB(255, 46, 46, 66),
                         )
                       )
                     ),
-                  ),
-                  const Text(
-                    "Категория",
-                    style: TextStyle(
-                      color: Colors.white
+                    style: const TextStyle(
+                      color: Colors.white,
                     ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: selectedCategory,
-                    onChanged: (String? newValue){
-                      setState(
-                        (){selectedCategory = newValue!;}
-                      );
-                    },
-                    items: categories["income"]!.map<DropdownMenuItem<String>>((String title){
-                      return DropdownMenuItem(
-                        value: title,
-                        child: Container(
-                          height: 26,
-                          width: 270,
-                          color: Color.fromARGB(255, 34, 34, 54),
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              backgroundColor: Color.fromARGB(255, 34, 34, 54)
-                            )
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                      );
-                    }).toList(),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15, bottom: 10, left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      "Категория",
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 320,
+                    child: DropdownButtonFormField2<String>(
+                      onChanged: (String? newValue){
+                        setState(
+                          (){selectedCategory = newValue!;}
+                        );
+                      },
+                      hint: const Text(
+                        "Выберите категорию",
+                        style: TextStyle(
+                          color: Color.fromARGB(128, 255, 255, 255)
+                        )
+                      ),
+                      items: getCategoryItems("income"),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero
+                      ),
+                      buttonDecoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 34, 34, 54),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                          width: 2,
+                          color: const Color.fromARGB(255, 46, 46, 66)
+                        )
+                      ),
+                      isExpanded: true,
+                      buttonHeight: 40,
+                      buttonWidth: 320,
+                      buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      itemHeight: 20,
+                      dropdownDecoration: const BoxDecoration(
+                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+                        color: Color.fromARGB(255, 46, 46, 66)
+                      ),
+                      dropdownWidth: 320,
+                      offset: const Offset(0, 10),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15, bottom: 10, left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      "Сумма",
+                      style: TextStyle(
+                        color:  Colors.white
+                      )
+                    ),
+                  ),
+                  TextFormField(
                     decoration: const InputDecoration(
                       constraints: BoxConstraints.tightFor(
                         width: 320,
-                        height: 60
+                        height: 40
                       ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 2,
                           color: Color.fromARGB(255, 46, 46, 66),
@@ -125,43 +202,45 @@ class _OperationPageState extends State<OperationPage> {
                       fillColor: Color.fromARGB(255, 34, 34, 54),
                       filled: true,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 2,
                           color: Color.fromARGB(255, 46, 46, 66),
                         )
                       )
                     ),
+                    style: const TextStyle(
+                      color: Colors.white
+                    ),
                   ),
-                  const Text(
-                    "Сумма",
-                    style: TextStyle(
-                      color:  Colors.white
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    alignment: Alignment.centerRight,
+                    child: OutlinedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                          )
+                        ),
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => BorderSide(
+                            color: Colors.white,
+                            width: 2
+                          )
+                        )
+                        
+                      ),
+                      child: const Text(
+                        "Добавить",
+                        style: TextStyle(
+                          color:  Colors.white
+                        ),
+                      ),
+                      onPressed: (){
+                        // валидация формы и отправка данных
+                      },
                     )
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      constraints: BoxConstraints.tightFor(
-                        width: 320,
-                        height: 60
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Color.fromARGB(255, 46, 46, 66),
-                        ),
-                      ),
-                      fillColor: Color.fromARGB(255, 34, 34, 54),
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Color.fromARGB(255, 46, 46, 66),
-                        )
-                      )
-                    ),
                   )
                 ],
               ),
