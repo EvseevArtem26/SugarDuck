@@ -5,6 +5,7 @@ import './components/navbar.dart';
 import 'income.dart';
 import 'category.dart';
 import 'operation.dart';
+import 'exchange.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,13 +23,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       
-			initialRoute: '/operation',
+			initialRoute: '/exchange',
 			routes: {
         // '/': (context) => AuthPage(),
         '/home': (context) => HomePage(title: "Главная"),
         '/income': (context) => IncomePage(),
         '/category': (context) => CategoryPage(title: "Категория"),
-        '/operation': (context) => OperationPage()
+        '/operation': (context) => OperationPage(),
+        '/exchange': (context) => ExchangePage()
 			}
     );
   }
