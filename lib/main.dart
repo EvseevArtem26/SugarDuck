@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +18,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       
-			initialRoute: '/home',
+			initialRoute: '/settings',
 			routes: {
         // '/': (context) => AuthPage(),
         '/home': (context) => HomePage(title: "Главная"),
+        '/settings': (context) => SettingsPage()
 			}
     );
   }
