@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-enum CategoryType
-{
+enum CategoryType {
   salary,
   gifts,
   allowances,
@@ -12,26 +11,22 @@ enum CategoryType
   otherExpenses,
 }
 
-enum Type
-{
+enum Type {
   income,
   expense,
 }
 
-Category categoryFromJson(String str)
-{
+Category categoryFromJson(String str) {
   final jsonData = json.decode(str);
   return Category.fromJson(jsonData);
 }
 
-String categoryToJson(Category category)
-{
+String categoryToJson(Category category) {
   final data = category.toJson();
   return json.encode(data);
 }
 
-class Category
-{
+class Category {
   Category({required this.id, required this.categoryType, required this.type});
 
   int id;
@@ -39,15 +34,8 @@ class Category
   Type type;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      id: json["id"],
-      categoryType: json["categoryType"],
-      type: json["type"]
-  );
+      id: json["id"], categoryType: json["categoryType"], type: json["type"]);
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "categoryType": categoryType,
-    "type": type
-  };
-
+  Map<String, dynamic> toJson() =>
+      {"id": id, "categoryType": categoryType, "type": type};
 }

@@ -1,20 +1,21 @@
 import 'dart:convert';
 
-Client clientFromJson(String str)
-{
+Client clientFromJson(String str) {
   final jsonData = json.decode(str);
   return Client.fromJson(jsonData);
 }
 
-String clientToJson(Client client)
-{
+String clientToJson(Client client) {
   final data = client.toJson();
   return json.encode(data);
 }
 
-class Client
-{
-  Client({required this.id, required this.email, required this.password, required this.currency});
+class Client {
+  Client(
+      {required this.id,
+      required this.email,
+      required this.password,
+      required this.currency});
 
   int id;
   String email;
@@ -25,13 +26,8 @@ class Client
       id: json["id"],
       email: json["email"],
       password: json["password"],
-      currency: json["currency"]
-  );
+      currency: json["currency"]);
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "email": email,
-    "password": password,
-    "currency": currency
-  };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "email": email, "password": password, "currency": currency};
 }

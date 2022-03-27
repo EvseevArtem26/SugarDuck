@@ -3,22 +3,24 @@ import 'dart:convert';
 import 'package:sugar_duck/database_entities/category.dart';
 import 'package:sugar_duck/database_entities/client.dart';
 
-Operation categoryFromJson(String str)
-{
+Operation categoryFromJson(String str) {
   final jsonData = json.decode(str);
   return Operation.fromJson(jsonData);
 }
 
-String categoryToJson(Operation operation)
-{
+String categoryToJson(Operation operation) {
   final data = operation.toJson();
   return json.encode(data);
 }
 
-class Operation
-{
+class Operation {
   Operation(
-      {required this.id, required this.name, required this.sum, required this.date, required this.category, required this.client});
+      {required this.id,
+      required this.name,
+      required this.sum,
+      required this.date,
+      required this.category,
+      required this.client});
 
   int id;
   String name;
@@ -28,21 +30,20 @@ class Operation
   Client client;
 
   factory Operation.fromJson(Map<String, dynamic> json) => Operation(
-      id: json["id"],
-      name: json["name"],
-      sum: json["sum"],
-      date: json["date"],
-      category: json["category"],
-      client: json["client"],
-  );
+        id: json["id"],
+        name: json["name"],
+        sum: json["sum"],
+        date: json["date"],
+        category: json["category"],
+        client: json["client"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "sum": sum,
-    "date": date,
-    "category": category,
-    "client": client,
-  };
-
+        "id": id,
+        "name": name,
+        "sum": sum,
+        "date": date,
+        "category": category,
+        "client": client,
+      };
 }
