@@ -1,11 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-
-
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: AccountPage(),
-));
+import './components/navbar.dart';
 
 
 class AccountPage extends StatefulWidget {
@@ -34,16 +29,16 @@ class _AccountPageState extends State<AccountPage> {
       ),
     ),
     body: Container(
-        color: Color.fromARGB(255, 26, 26, 46),
+        alignment: Alignment.center,
+        color: const Color.fromARGB(255, 26, 26, 46),
         child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left:20, right:20),
-                child: Divider(
-                  height: 20,
-                  thickness: 2,
-                  color: const Color.fromARGB(255,46,46,66),
-                ),
+              const Divider(
+                height: 20,
+                thickness: 2,
+                color: Color.fromARGB(255,46,46,66),
+                indent: 20,
+                endIndent: 20
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +54,7 @@ class _AccountPageState extends State<AccountPage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 40),
                     child: GestureDetector(
-                      onTap: (){},
+                      onTap: (){Navigator.pushNamed(context, '/account/email');},
                       child: Text("Изменить", style: GoogleFonts.manrope(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -78,13 +73,12 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                 ],
               ),
-              const Padding(
-                padding: const EdgeInsets.only(left:20, right:20),
-                child: Divider(
-                  height: 20,
-                  thickness: 2,
-                  color: const Color.fromARGB(255,46,46,66),
-                ),
+              const Divider(
+                height: 20,
+                thickness: 2,
+                color:Color.fromARGB(255,46,46,66),
+                indent: 20,
+                endIndent: 20
               ),
               Row(
                 children: [
@@ -100,113 +94,141 @@ class _AccountPageState extends State<AccountPage> {
               Form(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        child: TextFormField(
-                          cursorColor: Colors.white,
-                          decoration: const InputDecoration(labelText: "Enter your new password", labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
-                          keyboardType: TextInputType.emailAddress,
-                          maxLines: 1,
-                          style: _sizeTextWhite,
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        decoration: const InputDecoration(
+                          constraints: BoxConstraints.tightFor(
+                            width: 320,
+                            height: 40
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 46, 46, 66),
+                            ),
+                          ),
+                          fillColor: Color.fromARGB(255, 34, 34, 54),
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 46, 46, 66),
+                            )
+                          ),
+                          hintText: "Введите новый пароль",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(128, 255, 255, 255),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16
+                          ),
                         ),
-                        width: 300.0,
+                        keyboardType: TextInputType.emailAddress,
+                        maxLines: 1,
+                        style: _sizeTextWhite,
                       ),
-                      Container(
+                      Padding(
                         child: TextFormField(
-                          decoration: const InputDecoration(labelText: "Enter your password again", focusColor: Colors.white, iconColor: Colors.white, labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                          decoration: const InputDecoration(
+                            constraints: BoxConstraints.tightFor(
+                              width: 320,
+                              height: 40
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 46, 46, 66),
+                              ),
+                            ),
+                            fillColor: Color.fromARGB(255, 34, 34, 54),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 46, 46, 66),
+                              )
+                            ),
+                            hintText: "Повторите новый пароль",
+                            hintStyle: TextStyle(
+                              color: Color.fromARGB(128, 255, 255, 255),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16
+                            ),
+                          ),
                           obscureText: true,
                           maxLines: 1,
                           style: _sizeTextWhite,
                         ),
-                        width: 300.0,
-                        padding: const EdgeInsets.only(top: 10.0),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 25),
                       ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 25.0, bottom: 15, right: 20),
-                            child: MaterialButton(
-                              elevation: null,
-                              onPressed: (){},
-                              color: const Color.fromARGB(255, 26, 26, 46),
-                              splashColor: Colors.white,
-                              height: 40.0,
-                              minWidth: 120.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: BorderSide(color: Colors.white)),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          width: 145,
+                          child: MaterialButton(
+                            elevation: null,
+                            onPressed: (){},
+                            color: const Color.fromARGB(255, 26, 26, 46),
+                            splashColor: Colors.white,
+                            height: 40.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(color: Colors.white)),
+                            child: Center(
                               child: Text(
                                 "Изменить пароль",
-                                style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255)),
+                                softWrap: false,
+                                style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255)),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 180.0, bottom: 15),
-                        child: MaterialButton(
-                          elevation: null,
-                          onPressed: (){},
-                          color: const Color.fromARGB(255, 26, 26, 46),
-                          splashColor: Colors.white,
-                          height: 40.0,
-                          minWidth: 120.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(color: Colors.white)),
-                          child: Text(
-                            "Выйти",
-                            style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255)),
-                          ),
                         ),
                       ),
-                      Center(
-                        child: GestureDetector(
-                            onTap: (){
-                              Feedback.forTap(context);
-                            },
-                            child: Text("Удалить профиль",
-                              style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w600, color: const Color.fromARGB(255, 255, 255, 255)),)),
-                      ),
                     ],
-                  )),
+                  )
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: MaterialButton(
+                  elevation: null,
+                  onPressed: (){},
+                  color: const Color.fromARGB(255, 26, 26, 46),
+                  splashColor: Colors.white,
+                  height: 40.0,
+                  minWidth: 120.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(color: Colors.white)),
+                  child: Text(
+                    "Выйти",
+                    style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: (){
+                  Feedback.forTap(context);
+                },
+                child: Text(
+                  "Удалить профиль",
+                  style: GoogleFonts.manrope(
+                    fontSize: 12, 
+                    fontWeight: FontWeight.w600, 
+                    color: const Color.fromARGB(255, 255, 255, 255)
+                  ),
+                )
+              ),
             ]
         )
     ),
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: 4,
-      items: const [
-        BottomNavigationBarItem(
-          icon:Icon(Icons.newspaper_outlined),
-          label: "Новости",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.currency_exchange_outlined),
-          label: "Курсы валют",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Главная",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Настройки",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          label: "Профиль",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-
-        ),
-      ],
-      showSelectedLabels: false,
-      unselectedItemColor: const Color.fromARGB(255, 141, 147, 171),
-      selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
-
-    ),
+    bottomNavigationBar: NavBar()
   );
 }
