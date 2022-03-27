@@ -1,10 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: NewsPage(),
-));
+import './components/navbar.dart';
 
 
 class NewsPage extends StatefulWidget {
@@ -59,41 +55,7 @@ class _NewsPageState extends State<NewsPage> {
              ],
             ),
   ),
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: 0,
-      items: const [
-        BottomNavigationBarItem(
-          icon:Icon(Icons.newspaper_outlined),
-          label: "Новости",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.currency_exchange_outlined),
-          label: "Курсы валют",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Главная",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Настройки",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          label: "Профиль",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-
-        ),
-      ],
-      showSelectedLabels: false,
-      unselectedItemColor: const Color.fromARGB(255, 141, 147, 171),
-      selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
-
-    ),
+    bottomNavigationBar: NavBar()
   );
 
 
@@ -118,7 +80,7 @@ class NewsCards extends StatelessWidget{
         padding: const EdgeInsets.only( top: 10),
         child: Text('5.02.22', style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 255, 255, 255)) ,),
       ),
-      onTap: (){},
+      onTap: (){Navigator.pushNamed(context, '/article');},
     ),
   );
 

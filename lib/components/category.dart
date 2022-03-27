@@ -27,77 +27,80 @@ class Category extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(18)
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 10,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: sideColor,
-              borderRadius: BorderRadius.horizontal(left: Radius.circular(borderRadius))
+    return GestureDetector(
+      onTap: (){Navigator.pushNamed(context, '/category');},
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(18)
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 10,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: sideColor,
+                borderRadius: BorderRadius.horizontal(left: Radius.circular(borderRadius))
+              ),
             ),
-          ),
-          Container(
-            width: width! - 10,
-            height: double.infinity,
-            padding: EdgeInsets.fromLTRB(padding-10, padding/2, padding, padding/2),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 40,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        softWrap: false,
-                        style: const TextStyle(
-                          color: Colors.white
+            Container(
+              width: width! - 10,
+              height: double.infinity,
+              padding: EdgeInsets.fromLTRB(padding-10, padding/2, padding, padding/2),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 40,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title,
+                          softWrap: false,
+                          style: const TextStyle(
+                            color: Colors.white
+                          )
+                        ),
+                        Text(
+                          "$amount операций",
+                          softWrap: false,
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
                         )
-                      ),
-                      Text(
-                        "$amount операций",
-                        softWrap: false,
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      )
-                    ],
-                  )
-                ),
-                const Spacer(flex: 30),
-                Expanded(
-                  flex: 35,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "$sum RUB",
-                        style: const TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      const Icon(
-                        Icons.chevron_right,
-                        color: Color.fromARGB(255, 141, 147, 171),
-                      ),
-                    ],
+                      ],
+                    )
                   ),
-                ),
-                
-              ]
+                  const Spacer(flex: 30),
+                  Expanded(
+                    flex: 35,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "$sum RUB",
+                          style: const TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        const Icon(
+                          Icons.chevron_right,
+                          color: Color.fromARGB(255, 141, 147, 171),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                ]
+              ),
             ),
-          ),
-          
-        ],
-      )
+            
+          ],
+        )
+      ),
     );
   }
 }

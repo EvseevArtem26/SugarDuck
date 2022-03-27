@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'components/navbar.dart';
 
 
 void main() => runApp(const MaterialApp(
@@ -110,41 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
       ])),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3,
-      items: const [
-        BottomNavigationBarItem(
-          icon:Icon(Icons.newspaper_outlined),
-          label: "Новости",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.currency_exchange_outlined),
-          label: "Курсы валют",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Главная",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Настройки",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          label: "Профиль",
-          backgroundColor: Color.fromARGB(255, 34, 34, 54),
-
-        ),
-      ],
-      showSelectedLabels: false,
-      unselectedItemColor: const Color.fromARGB(255, 141, 147, 171),
-      selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
-
-    ),
+      bottomNavigationBar: NavBar()
   );
 
   
