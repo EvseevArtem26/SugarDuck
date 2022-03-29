@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'settings.dart';
 import 'package:card_swiper/card_swiper.dart';
 import './components/navbar.dart';
 import 'income.dart';
 import 'category.dart';
 import 'operation.dart';
 import 'exchange.dart';
+import 'news.dart';
+import 'article.dart';
+import 'account.dart';
+import 'emailChange.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,15 +27,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      
-			initialRoute: '/exchange',
+      debugShowCheckedModeBanner: false,
+			initialRoute: '/home',
 			routes: {
         // '/': (context) => AuthPage(),
         '/home': (context) => HomePage(title: "Главная"),
-        '/income': (context) => IncomePage(),
+        '/income': (context) => IncomePage(initialType: 0),
+        '/expense': (context) => IncomePage(initialType: 1,),
         '/category': (context) => CategoryPage(title: "Категория"),
         '/operation': (context) => OperationPage(),
-        '/exchange': (context) => ExchangePage()
+        '/exchange': (context) => ExchangePage(),
+        '/settings': (context) => SettingsPage(),
+        '/news': (context) => NewsPage(),
+        '/article': (context) => ArticlePage(),
+        '/account': (context) => AccountPage(),
+        '/account/email': (context) => EmailChangePage()
 			}
     );
   }
@@ -189,132 +200,142 @@ class _HomePageState extends State<HomePage> {
 							    	mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 							    	crossAxisAlignment: CrossAxisAlignment.center,
 							    	children: [
-							    		Container(
-							    			width: 150,
-							    			height:  MediaQuery.of(context).size.height*0.15,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 34, 34, 54),
-                          borderRadius: BorderRadius.circular(18)
-                        ),
-							    			child: Row(
-							    			  children: [
-                            Container(
-                              width: 10,
-                              height: double.infinity,
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 138, 164, 255),
-                                borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
-                              ),
-                            ),
-							    			    Container(
-                              width: 140,
-                              height: double.infinity,
-                              padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
-                                  child: Column(
-							    			      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							    			      	crossAxisAlignment: CrossAxisAlignment.start,
-							    			      	children: [
-							    			      		Row(
-							    			      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							    			      			children: const [
-							    			      				Text(
-                                    "Доходы",
-                                    style: TextStyle(
-                                      color: Colors.white
-                                    ),
-                                  ),
-							    			      				Icon(
-                                    Icons.chevron_right,
-                                    color: Color.fromARGB(255, 141, 147, 171)
-                                  )
-							    			      			],
-							    			      		),
-							    			      		const Text(
-                                "5 операций",
-                                style: TextStyle(
-                                  color: Colors.white
-                                ),
-                              ),
-							    			      		Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-							    			      		  children: const [
-							    			      		    Text(
-                                "1000 рублей",
-                                style: TextStyle(
-                                  color: Colors.white
-                                ),
-                              ),
-							    			      		  ],
-							    			      		)
-							    			      	],
-							    			      ),
-							    			    ),
-							    			  ],
-							    			)
-							    		),
-							    		Container(
-							    			width: 150,
-							    			height:  MediaQuery.of(context).size.height*0.15,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 34, 34, 54),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-							    			child: Row(
-							    			  children: [
-                        Container(
-                          width: 10,
-                          height: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 50, 76, 167),
-                            borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
+							    		GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(context, '/income');
+                        },
+                        child: Container(
+                          width: 150,
+                          height:  MediaQuery.of(context).size.height*0.15,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 34, 34, 54),
+                            borderRadius: BorderRadius.circular(18)
                           ),
-                        ),
-							    			    Container(
-                          width: 140,
-                          height: double.infinity,
-                          padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
-							    			      child: Column(
-							    			      	mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							    			      	crossAxisAlignment: CrossAxisAlignment.start,
-							    			      	children: [
-							    			      		Row(
-							    			      			mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							    			      			children: const [
-							    			      				Text(
-                                    "Расходы",
-                                    style: TextStyle(
-                                      color: Colors.white
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: double.infinity,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 138, 164, 255),
+                                  borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
+                                ),
+                              ),
+                              Container(
+                                width: 140,
+                                height: double.infinity,
+                                padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        Text(
+                                          "Доходы",
+                                          style: TextStyle(
+                                            color: Colors.white
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.chevron_right,
+                                          color: Color.fromARGB(255, 141, 147, 171)
+                                        )
+                                      ],
                                     ),
-                                  ),
-							    			      				Icon(
-                                    Icons.chevron_right,
-                                    color: Color.fromARGB(255, 141, 147, 171)
-                                  )
-							    			      			],
-							    			      		),
-							    			      		const Text(
-                                "6 операций",
-                                style: TextStyle(
-                                  color: Colors.white
+                                    const Text(
+                                      "5 операций",
+                                      style: TextStyle(
+                                        color: Colors.white
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: const [
+                                        Text(
+                                          "1000 рублей",
+                                          style: TextStyle(
+                                            color: Colors.white
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
-							    			      		Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-							    			      		  children: const[
-							    			      		    Text(
-                                "1200 рублей",
-                                style: TextStyle(
-                                  color: Colors.white
+                            ],
+                          )
+                        ),
+                      ),
+							    		GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(context, '/expense');
+                        },
+                        child: Container(
+                          width: 150,
+                          height:  MediaQuery.of(context).size.height*0.15,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 34, 34, 54),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: double.infinity,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 50, 76, 167),
+                                  borderRadius: BorderRadius.horizontal(left: Radius.circular(18))
                                 ),
                               ),
-							    			      		  ],
-							    			      		)
-							    			      	],
-							    			      ),
-							    			    ),
-							    			  ],
-							    			)
-							    		),
+                              Container(
+                                width: 140,
+                                height: double.infinity,
+                                padding: const EdgeInsets.fromLTRB(10, 20, 20, 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        Text(
+                                          "Расходы",
+                                          style: TextStyle(
+                                          color: Colors.white
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.chevron_right,
+                                          color: Color.fromARGB(255, 141, 147, 171)
+                                        )
+                                      ],
+                                    ),
+                                    const Text(
+                                      "6 операций",
+                                      style: TextStyle(
+                                        color: Colors.white
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                        children: const[
+                                          Text(
+                                            "1200 рублей",
+                                            style: TextStyle(
+                                              color: Colors.white
+                                            ),
+                                          ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+                      ),
 							    	],
 							    ),
 							  ],

@@ -2,14 +2,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 
-
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: ArticlePage(),
-));
-
-
-
 class ArticlePage extends StatefulWidget {
   const ArticlePage({Key? key}) : super(key: key);
 

@@ -71,18 +71,23 @@ class _CategoryPageState extends State<CategoryPage> {
                               flex: 2,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     "Покупка цветов маме",
                                     softWrap: false,
                                     style: TextStyle(
                                       color: Colors.white
                                     ),
                                   ),
-                                  Icon(
-                                    Icons.edit_outlined,
-                                    color: Colors.white,
-                                    size: 15
+                                  IconButton(
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(maxWidth: 15, maxHeight: 15),
+                                    onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                    iconSize: 15,
+                                    icon: const Icon(
+                                      Icons.edit_outlined,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ],
                               )

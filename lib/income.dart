@@ -63,6 +63,7 @@ class _IncomePageState extends State<IncomePage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
+      initialIndex: widget.initialType,
       child: Builder(
         builder: (BuildContext context){
           final TabController tabController = DefaultTabController.of(context)!;
@@ -131,6 +132,7 @@ class _IncomePageState extends State<IncomePage> {
                       const Flexible(
                         flex: 1,
                         child: TabBar(
+
                           tabs: [
                             Tab(
                               text: "Доходы",
@@ -157,17 +159,23 @@ class _IncomePageState extends State<IncomePage> {
                                     height: 30,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: const [
-                                        Text(
-                                          "Посмотреть все операции",
-                                          style: TextStyle(
-                                            color: Colors.white,
+                                      children: [
+                                        TextButton(
+                                          onPressed: (){Navigator.pushNamed(context, '/category');},
+                                          child: const Text(
+                                            "Посмотреть все операции",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
-                                        Icon(
-                                          Icons.add_circle_outline,
-                                          color: Colors.white,
-                                          size: 30,
+                                        IconButton(
+                                          onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                          icon: const Icon(
+                                            Icons.add_circle_outline,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
                                         )
                                       ],
                                     )
@@ -187,17 +195,23 @@ class _IncomePageState extends State<IncomePage> {
                                     height: 30,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: const [
-                                        Text(
-                                          "Посмотреть все операции",
-                                          style: TextStyle(
-                                            color: Colors.white,
+                                      children: [
+                                        TextButton(
+                                          onPressed: (){Navigator.pushNamed(context, '/category');},
+                                          child: const Text(
+                                            "Посмотреть все операции",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
-                                        Icon(
-                                          Icons.add_circle_outline,
-                                          color: Colors.white,
-                                          size: 30,
+                                        IconButton(
+                                          onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                          icon: const Icon(
+                                            Icons.add_circle_outline,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
                                         )
                                       ],
                                     )

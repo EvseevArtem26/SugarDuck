@@ -9,6 +9,14 @@ class NavBar extends StatefulWidget{
 
 class _NavBarState extends State<NavBar>{
   int _bottomNavBarIndex = 0;
+  List<String> routes = [
+    '/news',
+    '/exchange',
+    '/home',
+    '/settings',
+    '/account'
+  ];
+
 
   @override
   Widget build(BuildContext context){
@@ -19,15 +27,16 @@ class _NavBarState extends State<NavBar>{
         onTap: (int index) {
           setState(() {
             _bottomNavBarIndex = index;
+            Navigator.pushReplacementNamed(context, routes[index]);
           });
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.feed_outlined),
+            icon: Icon(Icons.newspaper_outlined),
             label: "Новости",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.paid_outlined),
+            icon: Icon(Icons.currency_exchange_outlined),
             label: "Курсы валют",  
           ),
           BottomNavigationBarItem(
