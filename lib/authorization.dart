@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: MyApp(),
-));
-
-class MyApp extends StatelessWidget {
+class Authorization extends StatelessWidget {
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
 
-  const MyApp({Key? key}) : super(key: key);
+  const Authorization({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +77,9 @@ class MyApp extends StatelessWidget {
                       ),
                     ),
                     Center(
-                      child: GestureDetector(
-                        onTap: (){
-                          Feedback.forTap(context);
+                      child: TextButton(
+                        onPressed: (){
+                          Navigator.pushNamed(context, '/register');
                         },
                           child: Text("Зарегистрироваться", style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w600, color: const Color.fromARGB(255, 255, 255, 255)),)),
                     ),

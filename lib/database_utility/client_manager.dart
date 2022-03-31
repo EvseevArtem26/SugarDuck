@@ -1,38 +1,42 @@
 import 'package:sugar_duck/database/databaseManager.dart';
 import 'package:sugar_duck/database_entities/client.dart';
 
-newClient(Client newClient) async {
-  final db = await DatabaseManager.db.database;
-  var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Client");
-  int id = int.parse(table.first["id"].toString());
-  newClient.id = id;
+class ClientManager {
+  static int currentClientID = -1;
 
-  var res = await db.insert("Client", newClient.toJson());
-  return res;
-}
+  static newClient(Client newClient) async {
+    final db = await DatabaseManager.db.database;
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Client");
+    int id = int.parse(table.first["id"].toString());
+    newClient.id = id;
 
-getClient(int id) async {
-  final db = await DatabaseManager.db.database;
-  var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
-  return res.isNotEmpty ? Client.fromJson(res.first) : null;
-}
+    var res = await db.insert("Client", newClient.toJson());
+    return res;
+  }
 
-getAllClients() async {
-  final db = await DatabaseManager.db.database;
-  var res = await db.query("Client");
-  List<Client> clients =
-      res.isNotEmpty ? res.map((json) => Client.fromJson(json)).toList() : [];
-  return clients;
-}
+  static getClient(int id) async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
+    return res.isNotEmpty ? Client.fromJson(res.first) : null;
+  }
 
-updateClient(Client clientForUpdate) async {
-  final db = await DatabaseManager.db.database;
-  var res = await db.update("Client", clientForUpdate.toJson(),
-      where: "id == ?", whereArgs: [clientForUpdate.id]);
-  return res;
-}
+  static getAllClients() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.query("Client");
+    List<Client> clients =
+    res.isNotEmpty ? res.map((json) => Client.fromJson(json)).toList() : [];
+    return clients;
+  }
 
-deleteClient(int id) async {
-  final db = await DatabaseManager.db.database;
-  db.delete("Client", where: "id = ?", whereArgs: [id]);
+  static updateClient(Client clientForUpdate) async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.update("Client", clientForUpdate.toJson(),
+        where: "id == ?", whereArgs: [clientForUpdate.id]);
+    return res;
+  }
+
+  static deleteClient(int id) async {
+    final db = await DatabaseManager.db.database;
+    db.delete("Client", where: "id = ?", whereArgs: [id]);
+  }
 }

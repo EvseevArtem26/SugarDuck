@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sugar_duck/database_utility/client_manager.dart';
 
+import 'database_entities/client.dart';
 
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: RegistrationPage(),
-));
 
 class RegistrationPage extends StatelessWidget {
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
@@ -14,6 +12,10 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String email = "";
+    String password = "";
+    String checkingPassword = "";
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(255, 26, 26, 46),
@@ -48,6 +50,7 @@ class RegistrationPage extends StatelessWidget {
                     child: TextFormField(
                       cursorColor: Colors.white,
                       decoration: const InputDecoration(labelText: "Email", labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                      onChanged: (text){email = text;},
                       keyboardType: TextInputType.emailAddress,
                       maxLines: 1,
                       style: _sizeTextWhite,
@@ -57,6 +60,7 @@ class RegistrationPage extends StatelessWidget {
                   Container(
                     child: TextFormField(
                       decoration: const InputDecoration(labelText: "Password", focusColor: Colors.white, iconColor: Colors.white, labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                      onChanged: (text){password = text;},
                       obscureText: true,
                       maxLines: 1,
                       style: _sizeTextWhite,
@@ -67,6 +71,7 @@ class RegistrationPage extends StatelessWidget {
                   Container(
                     child: TextFormField(
                       decoration: const InputDecoration(labelText: "Enter your password again", focusColor: Colors.white, iconColor: Colors.white, labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                      onChanged: (text){checkingPassword = text;},
                       obscureText: true,
                       maxLines: 1,
                       style: _sizeTextWhite,
@@ -78,7 +83,16 @@ class RegistrationPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 25.0, bottom: 15),
                     child: MaterialButton(
                       elevation: null,
-                      onPressed: (){},
+                      onPressed: (){
+                        print("$email $password $checkingPassword");
+                        if (checkingPassword != password) {
+                          print("Failed to validate password");
+                        }
+
+                        Client client = Client(id: 0, email: email, password: password, currency: "RUB");
+
+                        ClientManager.newClient(client);
+                      },
                       color: const Color.fromARGB(255, 26, 26, 46),
                       splashColor: Colors.white,
                       height: 40.0,
@@ -91,9 +105,9 @@ class RegistrationPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                      onTap: (){
-                        Feedback.forTap(context);
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/auth');
                       },
                       child: Text("Войти", style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w600, color: const Color.fromARGB(255, 255, 255, 255)),)),
                 ]

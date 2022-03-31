@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:sugar_duck/registration.dart';
 import 'settings.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:sugar_duck/authorization.dart';
 import './components/navbar.dart';
 import 'income.dart';
 import 'category.dart';
@@ -19,6 +21,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -28,9 +32,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-			initialRoute: '/home',
+			initialRoute: '/auth',
 			routes: {
-        // '/': (context) => AuthPage(),
+        '/auth': (context) => Authorization(),
+        '/register': (context) => RegistrationPage(),
         '/home': (context) => HomePage(title: "Главная"),
         '/income': (context) => IncomePage(initialType: 0),
         '/expense': (context) => IncomePage(initialType: 1,),

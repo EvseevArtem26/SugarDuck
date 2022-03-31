@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sugar_duck/database_entities/operation.dart';
+import 'package:sugar_duck/database_utility/operation_manager.dart';
 
 
 class CategoryPage extends StatefulWidget {
@@ -10,6 +12,19 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  List<Operation> _operations = List<Operation>.empty();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void update() async {
+    _operations = await OperationManager.getAllOperations();
+    setState(() {
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +49,10 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
+              children: [
                 Text(
-                  "3 операции",
-                  style: TextStyle(
+                  "${_operations.length} операции",
+                  style: const TextStyle(
                     color: Colors.white
                   ),
                 ),
@@ -138,4 +153,5 @@ class _CategoryPageState extends State<CategoryPage> {
       )
     );
   }
+
 }

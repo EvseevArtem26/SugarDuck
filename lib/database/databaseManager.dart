@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DatabaseManager {
   DatabaseManager._();
@@ -15,8 +14,7 @@ class DatabaseManager {
   }
 
   initDatabase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "sugarDuck.db");
+    String path = join(await getDatabasesPath(), "sugarDuck.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('''CREATE TABLE IF NOT EXISTS "Category" (
