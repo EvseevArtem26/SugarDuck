@@ -18,6 +18,33 @@ class OperationManager {
     var res = await db.query("Operation", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? Operation.fromJson(res.first) : null;
   }
+  
+  static getIncomeOperationsCount() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.rawQuery("SELECT count(*) as count from Operation where type == \"income\"");
+    var temp = res.first["count"];
+    return temp ?? 0;
+  }
+  static getIncomeOperationsSum() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.rawQuery("SELECT sum(sum) as sum from Operation where type == \"income\"");
+    var temp = res.first["sum"];
+    return temp ?? 0;
+  }
+
+  static getExpenseOperationsCount() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.rawQuery("SELECT count(*) as count from Operation where type == \"expense\"");
+    var temp = res.first["count"];
+    return temp ?? 0;
+  }
+
+  static getExpenseOperationsSum() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.rawQuery("SELECT sum(sum) as sum from Operation where type == \"expense\"");
+    var temp = res.first["sum"];
+    return temp ?? 0;
+  }
 
   static getAllOperations() async {
     final db = await DatabaseManager.db.database;
@@ -29,7 +56,10 @@ class OperationManager {
 
   static getSumOfOperations() async {
     final db = await DatabaseManager.db.database;
-    var res = await db.rawQuery("select sum(sum) from Operations");
+
+    var res = await db.rawQuery("select sum(sum) as sum from Operation");
+    var temp = res.first["sum"];
+    return temp ?? 0;
   }
 
   static updateOperation(Operation operationForUpdate) async {
