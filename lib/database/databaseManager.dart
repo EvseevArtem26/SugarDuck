@@ -10,6 +10,7 @@ class DatabaseManager {
   static Database? _database;
 
   Future<Database> get database async {
+      //await deleteDatabase(join(await getDatabasesPath(), "sugarDuck.db"));
       return _database ?? await initDatabase();
   }
 
@@ -20,7 +21,6 @@ class DatabaseManager {
       await db.execute('''CREATE TABLE IF NOT EXISTS "Category" (
         "id"	INTEGER NOT NULL UNIQUE,
         "type-category"	TEXT NOT NULL CHECK("type-category" IN ("salary", "gifts", "benefits", "other income", "food and nutrition", "clothes", "entertainment", "other expenses")),
-        "type"	TEXT CHECK("type" in ("income", "expense")),
         PRIMARY KEY("id" AUTOINCREMENT)
       )''');
       await db.execute('''CREATE TABLE IF NOT EXISTS "Client" (
@@ -36,6 +36,7 @@ class DatabaseManager {
         "sum"	REAL NOT NULL,
         "date"	TEXT NOT NULL,
         "category_id"	INTEGER NOT NULL,
+        "type"	TEXT CHECK("type" in ("income", "expense")),
         "client_id"	INTEGER NOT NULL,
         PRIMARY KEY("name"),
         FOREIGN KEY("client_id") REFERENCES "Client"("id"),

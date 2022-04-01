@@ -20,13 +20,15 @@ class Operation {
       required this.sum,
       required this.date,
       required this.category,
+      required this.type,
       required this.client});
 
   int id;
   String name;
-  int sum;
+  double sum;
   DateTime date;
   Category category;
+  String type;
   Client client;
 
   factory Operation.fromJson(Map<String, dynamic> json) => Operation(
@@ -35,6 +37,7 @@ class Operation {
         sum: json["sum"],
         date: json["date"],
         category: json["category"],
+        type: json["type"],
         client: json["client"],
       );
 
@@ -43,7 +46,7 @@ class Operation {
         "name": name,
         "sum": sum,
         "date": date,
-        "category": category,
+        "type": type,
         "client": client,
       };
 }

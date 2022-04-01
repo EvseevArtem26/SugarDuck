@@ -11,11 +11,6 @@ enum CategoryType {
   otherExpenses,
 }
 
-enum Type {
-  income,
-  expense,
-}
-
 Category categoryFromJson(String str) {
   final jsonData = json.decode(str);
   return Category.fromJson(jsonData);
@@ -27,15 +22,14 @@ String categoryToJson(Category category) {
 }
 
 class Category {
-  Category({required this.id, required this.categoryType, required this.type});
+  Category({required this.id, required this.categoryType});
 
   int id;
   CategoryType categoryType;
-  Type type;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      id: json["id"], categoryType: json["categoryType"], type: json["type"]);
+      id: json["id"], categoryType: json["categoryType"]);
 
   Map<String, dynamic> toJson() =>
-      {"id": id, "categoryType": categoryType, "type": type};
+      {"id": id, "categoryType": categoryType};
 }
