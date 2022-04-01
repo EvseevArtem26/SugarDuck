@@ -87,6 +87,7 @@ class RegistrationPage extends StatelessWidget {
                         print("$email $password $checkingPassword");
                         if (checkingPassword != password) {
                           print("Failed to validate password");
+                          return;
                         }
 
                         Client client = Client(id: 0, email: email, password: password, currency: "RUB");
