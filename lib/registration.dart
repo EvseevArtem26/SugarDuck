@@ -92,6 +92,7 @@ class RegistrationPage extends StatelessWidget {
                         Client client = Client(id: 0, email: email, password: password, currency: "RUB");
 
                         ClientManager.newClient(client);
+                        Navigator.popAndPushNamed(context, "/auth");
                       },
                       color: const Color.fromARGB(255, 26, 26, 46),
                       splashColor: Colors.white,
