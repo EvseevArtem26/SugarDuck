@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
         '/exchange': (context) => ExchangePage(),
         '/settings': (context) => SettingsPage(),
         '/news': (context) => NewsPage(),
-        '/article': (context) => ArticlePage(),
         '/account': (context) => AccountPage(),
         '/account/email': (context) => EmailChangePage()
 			}
