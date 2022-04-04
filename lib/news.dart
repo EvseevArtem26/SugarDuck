@@ -58,7 +58,10 @@ class _NewsPageState extends State<NewsPage> {
                             child: NewsCard(
                               title: snapshot.data![index]['title'],
                               date: DateTime.parse(snapshot.data![index]['pubDate']),
-                              content: snapshot.data![index]['full_description'] ?? snapshot.data![index]['description'],
+                              content: snapshot.data![index]['full_description'] 
+                                    ?? snapshot.data![index]['content']
+                                    ?? snapshot.data![index]['description']
+                                    ?? snapshot.data![index]['link'],
                             ),
                           );
                         },
