@@ -20,7 +20,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   void update() async {
-    _operations = await OperationManager.getAllOperations();
+    _operations = await OperationManager.update();
     setState(() {
     });
   }

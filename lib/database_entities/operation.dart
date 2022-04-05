@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:sugar_duck/database_entities/category.dart';
 import 'package:sugar_duck/database_entities/client.dart';
 
 Operation categoryFromJson(String str) {
@@ -26,10 +25,10 @@ class Operation {
   int id;
   String name;
   double sum;
-  DateTime date;
-  Category category;
+  String date;
+  String category;
   String type;
-  Client client;
+  int client;
 
   factory Operation.fromJson(Map<String, dynamic> json) => Operation(
         id: json["id"],
@@ -38,7 +37,7 @@ class Operation {
         date: json["date"],
         category: json["category"],
         type: json["type"],
-        client: json["client"],
+        client: json["client_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,7 +45,12 @@ class Operation {
         "name": name,
         "sum": sum,
         "date": date,
+        "category": category,
         "type": type,
-        "client": client,
+        "client_id": client,
       };
+
+  static Operation empty() {
+    return Operation(id: -1, name: "undefined", sum: 0.0, date: "undefined", category: "undefined", type: "undefined", client: -1);
+  }
 }

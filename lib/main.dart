@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
                 initialType: 1,
               ),
           '/category': (context) => CategoryPage(title: "Категория"),
-          '/operation': (context) => OperationPage(),
+          '/incomeOperation': (context) => OperationPage(type: "income"),
+          '/expenseOperation': (context) => OperationPage(type: "expense"),
           '/exchange': (context) => ExchangePage(),
           '/settings': (context) => SettingsPage(),
           '/news': (context) => NewsPage(),
@@ -64,13 +65,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _bottomNavBarIndex = 0;
 
-  double operationSum = 0;
-  int incomeCount = 0;
-  int expenseCount = 0;
-
-  double incomeSum = 0;
-  double expenseSum = 0;
-
   Map<String, double> dataMap = {
     "Доходы": 50,
     "Расходы": 50,
@@ -81,24 +75,14 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void update() async {
+    await OperationManager.update();
 
-    var temp = await OperationManager.getSumOfOperations();
-    operationSum = double.parse(temp.toString());
+    dataMap["Доходы"] = OperationManager.getIncomeOperationsSum();
+    dataMap["Расходы"] = OperationManager.getExpenseOperationsSum();
 
-    temp = await OperationManager.getIncomeOperationsCount();
-    incomeCount = int.parse(temp.toString());
+    setState(() {
 
-    temp = await OperationManager.getExpenseOperationsCount();
-    expenseCount = int.parse(temp.toString());
-
-    temp = await OperationManager.getIncomeOperationsSum();
-    incomeSum = double.parse(temp.toString());
-
-    temp = await OperationManager.getExpenseOperationsSum();
-    expenseSum = double.parse(temp.toString());
-
-    dataMap["Доходы"] = incomeSum;
-    dataMap["Расходы"] = expenseSum;
+    });
 
   }
 
@@ -143,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               Text(
-                                operationSum.toString(),
+                                OperationManager.operations.length.toString(),
                                 style: const TextStyle(color: Colors.white),
                               )
                             ],
@@ -198,9 +182,9 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           Text(
-                            (operationSum == 0)
+                            (OperationManager.getSumOfOperations() == 0)
                                 ? "Сбалансированный"
-                                : (operationSum > 0)
+                                : (OperationManager.getSumOfOperations() > 0)
                                     ? "Профицитный"
                                     : "Дефицитный",
                             style: const TextStyle(color: Colors.white),
@@ -280,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                                                 ],
                                               ),
                                               Text(
-                                                "$incomeCount операций",
+                                                "${OperationManager.getIncomeOperationsCount()} операций",
                                                 style: const TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -289,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    "$incomeSum рублей",
+                                                    "${OperationManager.getIncomeOperationsSum()} рублей",
                                                     style: const TextStyle(
                                                         color: Colors.white),
                                                   ),
@@ -354,7 +338,7 @@ class _HomePageState extends State<HomePage> {
                                                 ],
                                               ),
                                               Text(
-                                                "$expenseCount операций",
+                                                "${OperationManager.getExpenseOperationsCount()} операций",
                                                 style: const TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -363,7 +347,7 @@ class _HomePageState extends State<HomePage> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    "$expenseSum рублей",
+                                                    "${OperationManager.getExpenseOperationsSum()} рублей",
                                                     style: const TextStyle(
                                                         color: Colors.white),
                                                   ),

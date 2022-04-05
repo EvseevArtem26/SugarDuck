@@ -22,6 +22,12 @@ class ClientManager {
     return res;
   }
 
+  static findEmail(String email) async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.query("Client", where: "email = ?", whereArgs: [email]);
+    return res.isNotEmpty;
+  }
+
   static getClient(int id) async {
     final db = await DatabaseManager.db.database;
     var res = await db.query("Client", where: "id = ?", whereArgs: [id]);

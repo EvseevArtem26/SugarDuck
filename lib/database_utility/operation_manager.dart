@@ -2,12 +2,24 @@ import 'package:sugar_duck/database/databaseManager.dart';
 import 'package:sugar_duck/database_entities/operation.dart';
 
 class OperationManager {
+  static late List<Operation> operations = List<Operation>.empty();
+
+  static update() async {
+    final db = await DatabaseManager.db.database;
+    var res = await db.query("Operation");
+    print (res);
+    List<Operation> _operations =
+    res.isNotEmpty ? res.map((json) => Operation.fromJson(json)).toList() : [];
+    operations = _operations;
+    print(operations);
+  }
 
   static newOperation(Operation newOperation) async {
     final db = await DatabaseManager.db.database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Operation");
-    int id = int.parse(table.first["id"].toString());
-    newOperation.id = id;
+    var t = table.first["id"];
+    newOperation.id = table.first["id"] == null ? 0 : int.parse(t.toString());
+    print (newOperation.id);
 
     var res = await db.insert("Operation", newOperation.toJson());
     return res;
@@ -19,47 +31,34 @@ class OperationManager {
     return res.isNotEmpty ? Operation.fromJson(res.first) : null;
   }
   
-  static getIncomeOperationsCount() async {
-    final db = await DatabaseManager.db.database;
-    var res = await db.rawQuery("SELECT count(*) as count from Operation where type == \"income\"");
-    var temp = res.first["count"];
-    return temp ?? 0;
+  static int getIncomeOperationsCount() {
+    int incomeCount = 0;
+    for (var element in operations) {if(element.type == "income") incomeCount++;}
+    return incomeCount;
   }
-  static getIncomeOperationsSum() async {
-    final db = await DatabaseManager.db.database;
-    var res = await db.rawQuery("SELECT sum(sum) as sum from Operation where type == \"income\"");
-    var temp = res.first["sum"];
-    return temp ?? 0;
+  static double getIncomeOperationsSum() {
+    double incomeSum = 0;
+    for (var element in operations) {if(element.type == "income") incomeSum += element.sum;}
+    return incomeSum;
   }
 
-  static getExpenseOperationsCount() async {
-    final db = await DatabaseManager.db.database;
-    var res = await db.rawQuery("SELECT count(*) as count from Operation where type == \"expense\"");
-    var temp = res.first["count"];
-    return temp ?? 0;
+  static int getExpenseOperationsCount() {
+    int incomeCount = 0;
+    for (var element in operations) {if(element.type == "expense") incomeCount++;}
+    return incomeCount;
   }
 
-  static getExpenseOperationsSum() async {
-    final db = await DatabaseManager.db.database;
-    var res = await db.rawQuery("SELECT sum(sum) as sum from Operation where type == \"expense\"");
-    var temp = res.first["sum"];
-    return temp ?? 0;
+  static double getExpenseOperationsSum() {
+    double expenseSum = 0;
+    for (var element in operations) {if(element.type == "expense") expenseSum += element.sum;}
+    return expenseSum;
   }
 
-  static getAllOperations() async {
-    final db = await DatabaseManager.db.database;
-    var res = await db.query("Operation");
-    List<Operation> operations =
-    res.isNotEmpty ? res.map((json) => Operation.fromJson(json)).toList() : [];
-    return operations;
-  }
 
-  static getSumOfOperations() async {
-    final db = await DatabaseManager.db.database;
-
-    var res = await db.rawQuery("select sum(sum) as sum from Operation");
-    var temp = res.first["sum"];
-    return temp ?? 0;
+  static double getSumOfOperations() {
+    double sum = 0;
+    for (var element in operations) {sum += element.sum;}
+    return sum;
   }
 
   static updateOperation(Operation operationForUpdate) async {

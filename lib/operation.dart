@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:sugar_duck/database_entities/operation.dart';
+import 'package:sugar_duck/database_utility/client_manager.dart';
+import 'package:sugar_duck/database_utility/operation_manager.dart';
 
 class OperationPage extends StatefulWidget {
-  const OperationPage({ Key? key }) : super(key: key);
+  String type;
+
+  OperationPage({ Key? key, this.type = "income"}) : super(key: key);
 
   @override
-  State<OperationPage> createState() => _OperationPageState();
+  State<OperationPage> createState() => _OperationPageState(type);
 }
 
 class _OperationPageState extends State<OperationPage> {
+  _OperationPageState(this.type);
+
+  String type;
+  late Operation operation = Operation.empty();
+
   final Map<String, List<String>> categories = {
     "income": [
       "Зарплата",
@@ -23,7 +33,18 @@ class _OperationPageState extends State<OperationPage> {
       "Другие расходы"
     ]
   };
-  late String selectedCategory = categories["income"]![0];
+  late String selectedCategory = categories[type]![0];
+
+  addOperation() async {
+    operation.category = "selectedCategory"; // TODO fix category
+    operation.type = type;
+    if (type == "expense") operation.sum *= -1;
+    operation.client = ClientManager.currentClientID;
+    operation.date = DateTime.now().toString();
+    OperationManager.newOperation(operation);
+    await OperationManager.update();
+    Navigator.popAndPushNamed(context, "/home");
+  }
 
   List<DropdownMenuItem<String>> getCategoryItems(String group){
     List<String> titles = categories[group]!;
@@ -119,11 +140,16 @@ class _OperationPageState extends State<OperationPage> {
                           width: 2,
                           color: Color.fromARGB(255, 46, 46, 66),
                         )
-                      )
+                      ),
+
                     ),
                     style: const TextStyle(
                       color: Colors.white,
                     ),
+                    onChanged: (text)
+                      {
+                        operation.name = text;
+                      }
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 15, bottom: 10, left: 40),
@@ -149,7 +175,7 @@ class _OperationPageState extends State<OperationPage> {
                           color: Color.fromARGB(128, 255, 255, 255)
                         )
                       ),
-                      items: getCategoryItems("income"),
+                      items: getCategoryItems(type),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.zero
@@ -212,6 +238,9 @@ class _OperationPageState extends State<OperationPage> {
                     style: const TextStyle(
                       color: Colors.white
                     ),
+                    onChanged: (text){
+                      operation.sum = double.parse(text);
+                    },
                   ),
                   Container(
                     margin: const EdgeInsets.all(20),
@@ -237,9 +266,7 @@ class _OperationPageState extends State<OperationPage> {
                           color:  Colors.white
                         ),
                       ),
-                      onPressed: (){
-                        // валидация формы и отправка данных
-                      },
+                      onPressed: addOperation,
                     )
                   )
                 ],
@@ -250,4 +277,5 @@ class _OperationPageState extends State<OperationPage> {
       ),
     );
   }
+
 }

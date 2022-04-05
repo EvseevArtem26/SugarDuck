@@ -170,7 +170,7 @@ class _IncomePageState extends State<IncomePage> {
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                          onPressed: (){Navigator.pushNamed(context, '/incomeOperation');},
                                           icon: const Icon(
                                             Icons.add_circle_outline,
                                             color: Colors.white,
@@ -206,7 +206,7 @@ class _IncomePageState extends State<IncomePage> {
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                          onPressed: (){Navigator.pushNamed(context, '/expenseOperation');},
                                           icon: const Icon(
                                             Icons.add_circle_outline,
                                             color: Colors.white,
