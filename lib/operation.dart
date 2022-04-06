@@ -36,7 +36,7 @@ class _OperationPageState extends State<OperationPage> {
   late String selectedCategory = categories[type]![0];
 
   addOperation() async {
-    operation.category = "selectedCategory"; // TODO fix category
+    operation.category = OperationManager.nameInDataBase[selectedCategory] ?? "undefined";
     operation.type = type;
     if (type == "expense") operation.sum *= -1;
     operation.client = ClientManager.currentClientID;

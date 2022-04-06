@@ -12,7 +12,6 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  List<Operation> _operations = List<Operation>.empty();
 
   @override
   void initState() {
@@ -20,7 +19,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   void update() async {
-    _operations = await OperationManager.update();
+    await OperationManager.update();
     setState(() {
     });
   }
@@ -51,13 +50,13 @@ class _CategoryPageState extends State<CategoryPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "${_operations.length} операции",
+                  "${OperationManager.operations.length} операции",
                   style: const TextStyle(
                     color: Colors.white
                   ),
                 ),
                 Text(
-                  "1500 RUB",
+                  "${OperationManager.getSumOfOperations()} RUB",
                   style: TextStyle(
                     color: Colors.white
                   ),
@@ -87,8 +86,8 @@ class _CategoryPageState extends State<CategoryPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
-                                    "Покупка цветов маме",
+                                  Text(
+                                    OperationManager.operations[index].name,
                                     softWrap: false,
                                     style: TextStyle(
                                       color: Colors.white
@@ -97,7 +96,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     constraints: const BoxConstraints(maxWidth: 15, maxHeight: 15),
-                                    onPressed: (){Navigator.pushNamed(context, '/operation');},
+                                    onPressed: (){Navigator.pushNamed(context, '/expenseOperation');},
                                     iconSize: 15,
                                     icon: const Icon(
                                       Icons.edit_outlined,
@@ -117,15 +116,15 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
-                              "5.09.22",
+                              OperationManager.operations[index].date,
                               style: TextStyle(
                                 color: Colors.white
                               ),
                             ),
                             Text(
-                              "500 RUB",
+                              "${OperationManager.operations[index].sum} RUB",
                               softWrap: false,
                               style: TextStyle(
                                 color: Colors.white
@@ -145,7 +144,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     thickness: 2,
                   );
                 }, 
-                itemCount: 3
+                itemCount: OperationManager.operations.length
               ),
             )
           ],

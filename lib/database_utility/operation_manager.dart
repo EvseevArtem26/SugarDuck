@@ -1,16 +1,37 @@
 import 'package:sugar_duck/database/databaseManager.dart';
 import 'package:sugar_duck/database_entities/operation.dart';
+import 'package:sugar_duck/database_utility/client_manager.dart';
 
 class OperationManager {
+  static Map<String, String> nameInDataBase = {
+    "Зарплата": "salary",
+    "Подарки": "gifts",
+    "Пособия": "benefits",
+    "Прочие доходы": "other income",
+    "Одежда": "clothes",
+    "Еда и напитки": "food and drinks",
+    "Развлечения": "entertainments",
+    "Прочие расходы": "other expenses",
+  };
+
   static late List<Operation> operations = List<Operation>.empty();
+
+  static int compareOperations(Operation op1, Operation op2) {
+    if (DateTime.parse(op1.date).isAfter(DateTime.parse(op2.date))) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 
   static update() async {
     final db = await DatabaseManager.db.database;
-    var res = await db.query("Operation");
+    var res = await db.query("Operation", where: "client_id == ?", whereArgs: [ClientManager.currentClientID]);
     print (res);
     List<Operation> _operations =
     res.isNotEmpty ? res.map((json) => Operation.fromJson(json)).toList() : [];
     operations = _operations;
+    operations.sort(compareOperations);
     print(operations);
   }
 
@@ -53,7 +74,16 @@ class OperationManager {
     for (var element in operations) {if(element.type == "expense") expenseSum += element.sum;}
     return expenseSum;
   }
-
+  static double getOperationsSumWithCategory(String category) {
+    double expenseSum = 0;
+    for (var element in operations) {if(element.category == category) expenseSum += element.sum;}
+    return expenseSum;
+  }
+  static int getOperationsCountWithCategory(String category) {
+    int incomeCount = 0;
+    for (var element in operations) {if(element.category == category) incomeCount++;}
+    return incomeCount;
+  }
 
   static double getSumOfOperations() {
     double sum = 0;
@@ -65,11 +95,13 @@ class OperationManager {
     final db = await DatabaseManager.db.database;
     var res = await db.update("Operation", operationForUpdate.toJson(),
         where: "id == ?", whereArgs: [operationForUpdate.id]);
+    await update();
     return res;
   }
 
   static deleteOperation(int id) async {
     final db = await DatabaseManager.db.database;
     db.delete("Operation", where: "id = ?", whereArgs: [id]);
+    await update();
   }
 }

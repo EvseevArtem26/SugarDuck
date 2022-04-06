@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     await OperationManager.update();
 
     dataMap["Доходы"] = OperationManager.getIncomeOperationsSum();
-    dataMap["Расходы"] = OperationManager.getExpenseOperationsSum();
+    dataMap["Расходы"] = -1 * OperationManager.getExpenseOperationsSum();
 
     setState(() {
 
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               Text(
-                                OperationManager.operations.length.toString(),
+                                "${OperationManager.getSumOfOperations()} RUB",
                                 style: const TextStyle(color: Colors.white),
                               )
                             ],
