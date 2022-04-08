@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'components/navbar.dart';
+import 'network/exchange_rates.dart';
 
 
 void main() => runApp(const MaterialApp(
@@ -19,6 +20,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String input = '';
+  Map<String, String>currencies = ExchangeRates.currencies;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -104,9 +106,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   scrollDirection: Axis.vertical,
                   physics: AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 25,
+                  itemCount: currencies.length,
                   itemBuilder: (context, index){
-                      return Currencies().build(context);
+                      return Currency(
+                        code: currencies.keys.toList()[index], 
+                        title: currencies.values.toList()[index]
+                      );
                   },
                 ),
               ),
@@ -117,9 +122,10 @@ class _SettingsPageState extends State<SettingsPage> {
   
 }
 
-class Currencies extends StatelessWidget{
-  const Currencies({Key? key}) : super(key: key);
-
+class Currency extends StatelessWidget{
+  const Currency({required this.code, required this.title});
+  final String code;
+  final String title;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -139,7 +145,7 @@ class Currencies extends StatelessWidget{
                 children: [
                   Flexible(
                     child: Text(
-                      'Австралийский доллар',
+                      title,
                       style: GoogleFonts.manrope(
                         fontSize: 12, 
                         fontWeight: FontWeight.w400, 
@@ -149,7 +155,14 @@ class Currencies extends StatelessWidget{
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 40),
-                    child: Text('AUD',style: GoogleFonts.manrope(fontSize: 13, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255))),
+                    child: Text(
+                      code,
+                      style: GoogleFonts.manrope(
+                        fontSize: 13, 
+                        fontWeight: FontWeight.w700, 
+                        color: const Color.fromARGB(255, 255, 255, 255)
+                      )
+                    ),
                   ),
                 ],
               ),

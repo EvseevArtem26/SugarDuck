@@ -23,6 +23,7 @@ class _NavBarState extends State<NavBar>{
     return BottomNavigationBar(
       
         type: BottomNavigationBarType.fixed,
+        key: GlobalKey(),
         currentIndex: _bottomNavBarIndex,
         onTap: (int index) {
           setState(() {
