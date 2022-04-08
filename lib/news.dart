@@ -77,7 +77,7 @@ class _NewsPageState extends State<NewsPage> {
              ],
             ),
   ),
-    bottomNavigationBar: NavBar()
+    bottomNavigationBar: NavBar(initialIndex: 0,)
   );
 
 

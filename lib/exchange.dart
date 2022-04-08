@@ -174,7 +174,7 @@ class _ExchangePageState extends State<ExchangePage> {
           ]
         ),
       ),
-      bottomNavigationBar: const NavBar(),
+      bottomNavigationBar: const NavBar(initialIndex: 1,),
     );
   }
 }

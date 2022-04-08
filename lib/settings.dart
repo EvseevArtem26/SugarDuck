@@ -116,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
       ])),
-      bottomNavigationBar: NavBar()
+      bottomNavigationBar: NavBar(initialIndex: 3,)
   );
 
   
