@@ -67,10 +67,6 @@ class _Authorization extends State<Authorization> {
                     color: Color.fromARGB(255, 46, 46, 66),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: Image.asset("assets/picture.png"),
-                ),
                 SizedBox(
                   child: TextFormField(
                     cursorColor: Colors.white,

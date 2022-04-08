@@ -17,7 +17,7 @@ class _Registration extends State<Registration> {
   String password = "";
   String checkingPassword = "";
 
-  String error = "test";
+  String error = "";
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
 
   register() async {
@@ -73,10 +73,7 @@ class _Registration extends State<Registration> {
                 color: Color.fromARGB(255, 46, 46, 66),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Image.asset("assets/picture.png"),
-            ),
+
             SizedBox(
               child: TextFormField(
                 cursorColor: Colors.white,
