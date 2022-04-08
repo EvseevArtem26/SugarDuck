@@ -14,7 +14,10 @@ class _ConverterState extends State<Converter> {
   late List<String> selectedCurrencies = ["USD", "RUB"];
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController amountController = TextEditingController();
+  TextEditingController amountController = TextEditingController(
+    text: "1"
+  );
+  
   TextEditingController resultController = TextEditingController();
 
   double conversionRate = 1;
@@ -101,6 +104,7 @@ class _ConverterState extends State<Converter> {
                         fontSize: 10
                       )
                     ),
+                    value: selectedCurrencies[0],
                     items: getCurrencyItems(),
                     decoration: const InputDecoration(
                       isDense: true,
@@ -141,7 +145,7 @@ class _ConverterState extends State<Converter> {
                       height: 40
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    focusedBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                         width: 2,
@@ -150,7 +154,7 @@ class _ConverterState extends State<Converter> {
                     ),
                     fillColor: Color.fromARGB(255, 34, 34, 54),
                     filled: true,
-                    hintText: "Введите сумму",
+                    hintText: "Результат",
                     hintStyle: TextStyle(
                       color: Color.fromARGB(128, 255, 255, 255),
                       fontWeight: FontWeight.w400 
@@ -185,6 +189,7 @@ class _ConverterState extends State<Converter> {
                         fontSize: 10
                       )
                     ),
+                    value: selectedCurrencies[1],
                     items: getCurrencyItems(),
                     decoration: const InputDecoration(
                       isDense: true,
