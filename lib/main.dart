@@ -34,13 +34,21 @@ class MyApp extends StatelessWidget {
         initialRoute: '/auth',
         routes: {
           '/auth': (context) => Authorization(),
-          '/register': (context) => RegistrationPage(),
+          '/register': (context) => Registration(),
           '/home': (context) => HomePage(title: "Главная"),
           '/income': (context) => IncomePage(initialType: 0),
           '/expense': (context) => IncomePage(
                 initialType: 1,
               ),
-          '/category': (context) => CategoryPage(title: "Категория"),
+          '/category_all': (context) => CategoryPage(title: "Категория"),
+          '/category_salary': (context) => CategoryPage(title: "Зарплата"),
+          '/category_gifts': (context) => CategoryPage(title: "Подарки"),
+          '/category_benefits': (context) => CategoryPage(title: "Пособия"),
+          '/category_other income': (context) => CategoryPage(title: "Прочие доходы"),
+          '/category_clothes': (context) => CategoryPage(title: "Одежда"),
+          '/category_food and drinks': (context) => CategoryPage(title: "Еда и напитки"),
+          '/category_entertainments': (context) => CategoryPage(title: "Развлечения"),
+          '/category_other expenses': (context) => CategoryPage(title: "Прочие расходы"),
           '/incomeOperation': (context) => OperationPage(type: "income"),
           '/expenseOperation': (context) => OperationPage(type: "expense"),
           '/exchange': (context) => ExchangePage(),
@@ -63,7 +71,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _bottomNavBarIndex = 0;
+  final int _bottomNavBarIndex = 0;
 
   Map<String, double> dataMap = {
     "Доходы": 50,
@@ -91,6 +99,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     update();
   }
+
+  List months =
+  ['Январь', 'Февраль', 'Март', 'Апрель', 'Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                                     LegendOptions(showLegends: false),
                               ),
                               Center(
-                                child: Text("cентябрь\n2022",
+                                child: Text("${months[DateTime.now().month - 1]}\n${DateTime.now().year}",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
@@ -162,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                               )
                             ]);
                           },
-                          itemCount: 3,
+                          itemCount: 1,
                           loop: false,
                           control: SwiperControl(
                             color: Color.fromARGB(255, 141, 147, 171),

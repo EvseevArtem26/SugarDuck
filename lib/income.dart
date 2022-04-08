@@ -70,6 +70,9 @@ class _IncomePageState extends State<IncomePage> {
     return categories;
   }
 
+  List months =
+  ['Январь', 'Февраль', 'Март', 'Апрель', 'Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -113,8 +116,8 @@ class _IncomePageState extends State<IncomePage> {
                                 legendOptions:
                                     const LegendOptions(showLegends: false),
                               ),
-                              const Center(
-                                child: Text("cентябрь\n2022",
+                              Center(
+                                child: Text("${months[DateTime.now().month - 1]}\n${DateTime.now().year}",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
@@ -122,7 +125,7 @@ class _IncomePageState extends State<IncomePage> {
                               )
                             ]);
                           },
-                          itemCount: 3,
+                          itemCount: 1,
                           loop: false,
                           control: const SwiperControl(
                             color: Color.fromARGB(255, 141, 147, 171),
@@ -166,7 +169,7 @@ class _IncomePageState extends State<IncomePage> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(
-                                                        context, '/category');
+                                                        context, '/category_all');
                                                   },
                                                   child: const Text(
                                                     "Посмотреть все операции",
@@ -177,6 +180,7 @@ class _IncomePageState extends State<IncomePage> {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
+                                                    Feedback.forTap(context);
                                                     Navigator.pushNamed(context,
                                                         '/incomeOperation');
                                                   },
@@ -210,7 +214,7 @@ class _IncomePageState extends State<IncomePage> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(
-                                                        context, '/category');
+                                                        context, '/category_all');
                                                   },
                                                   child: const Text(
                                                     "Посмотреть все операции",

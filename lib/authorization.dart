@@ -2,20 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sugar_duck/database_utility/client_manager.dart';
 
-class Authorization extends StatelessWidget {
+
+class Authorization extends StatefulWidget {
+  const Authorization({Key? key}) : super(key: key);
+
+
+  @override
+  State<Authorization> createState() => _Authorization();
+}
+
+class _Authorization extends State<Authorization> {
+  String error = "";
   String email = "";
   String password = "";
   late BuildContext context;
 
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
 
-  Authorization({Key? key}) : super(key: key);
-
   checkPassword() async {
     print("$email $password");
-    await ClientManager.confirm(email, password);
+    await ClientManager.confirm(email.replaceAll(' ', ''), password);
     if (ClientManager.isConfirmed) {
+      print("confirmed");
       Navigator.popAndPushNamed(context, "/home");
+    }
+    else
+    {
+      setState(() {
+        error = "Неправильная почта или пароль";
+      });
     }
   }
 
@@ -124,6 +139,12 @@ class Authorization extends StatelessWidget {
                             color: const Color.fromARGB(255, 255, 255, 255)),
                       )),
                 ),
+                Text(error,
+                  style: GoogleFonts.manrope(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
+                )
               ],
             )),
           ),

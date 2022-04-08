@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:sugar_duck/database_utility/client_manager.dart';
+import 'package:sugar_duck/database_entities/client.dart';
+
 import './components/navbar.dart';
 
 
@@ -12,7 +17,24 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  String error = "";
+  String password = "";
+  String repeatedPassword = "";
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
+
+  changePassword() async {
+    if (password == repeatedPassword)
+    {
+      ClientManager.currentClient.password = password;
+      ClientManager.updateClient(ClientManager.currentClient);
+    }
+    else
+    {
+     setState(() {
+       error = "Пароли не совпадают";
+     });
+    }
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -51,7 +73,7 @@ class _AccountPageState extends State<AccountPage> {
                         fontWeight: FontWeight.w700,
                         color: Colors.white)),
                   ),
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.only(right: 40),
                     child: GestureDetector(
                       onTap: (){Navigator.pushNamed(context, '/account/email');},
@@ -60,13 +82,13 @@ class _AccountPageState extends State<AccountPage> {
                           fontWeight: FontWeight.w700,
                           color: Colors.white)),
                     ),
-                  ),
+                  ),*/
                 ],),
               Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 40, top: 15),
-                    child: Text("Email@yandex.ru", style: GoogleFonts.manrope(
+                    child: Text(ClientManager.currentClient.email, style: GoogleFonts.manrope(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: Colors.white)),
@@ -84,7 +106,7 @@ class _AccountPageState extends State<AccountPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 40, top: 15, bottom: 10) ,
-                    child: Text("Смена пароля", style: GoogleFonts.manrope(
+                    child: Text("Изменить пароль", style: GoogleFonts.manrope(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: Colors.white)),
@@ -125,9 +147,11 @@ class _AccountPageState extends State<AccountPage> {
                             fontSize: 16
                           ),
                         ),
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
                         maxLines: 1,
                         style: _sizeTextWhite,
+                        onChanged: (text){password = text;},
                       ),
                       Padding(
                         child: TextFormField(
@@ -163,6 +187,7 @@ class _AccountPageState extends State<AccountPage> {
                           obscureText: true,
                           maxLines: 1,
                           style: _sizeTextWhite,
+                          onChanged: (text){repeatedPassword = text;},
                         ),
                         padding: const EdgeInsets.only(top: 10.0, bottom: 25),
                       ),
@@ -174,7 +199,7 @@ class _AccountPageState extends State<AccountPage> {
                           width: 145,
                           child: MaterialButton(
                             elevation: null,
-                            onPressed: (){},
+                            onPressed: changePassword,
                             color: const Color.fromARGB(255, 26, 26, 46),
                             splashColor: Colors.white,
                             height: 40.0,
@@ -191,15 +216,19 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                         ),
                       ),
+                      Text(error,
+                        style: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w700, color: const Color.fromARGB(255, 255, 255, 255)),
+                      ),
                     ],
                   )
               ),
               const Spacer(),
+
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: MaterialButton(
                   elevation: null,
-                  onPressed: (){},
+                  onPressed: (){ClientManager.currentClient = Client.empty(); Navigator.popAndPushNamed(context, "/auth");},
                   color: const Color.fromARGB(255, 26, 26, 46),
                   splashColor: Colors.white,
                   height: 40.0,
@@ -216,6 +245,8 @@ class _AccountPageState extends State<AccountPage> {
               TextButton(
                 onPressed: (){
                   Feedback.forTap(context);
+                  ClientManager.deleteClient(ClientManager.currentClient.id);
+                  Navigator.popAndPushNamed(context, "/auth");
                 },
                 child: Text(
                   "Удалить профиль",

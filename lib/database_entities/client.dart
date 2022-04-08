@@ -30,4 +30,6 @@ class Client {
 
   Map<String, dynamic> toJson() =>
       {"id": id, "email": email, "password": password, "currency": currency};
+
+  static Client empty() => Client(id: -1, email: "", password: "", currency: "");
 }

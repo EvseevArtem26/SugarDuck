@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:sugar_duck/database/databaseManager.dart';
 import 'package:sugar_duck/database_entities/operation.dart';
 import 'package:sugar_duck/database_utility/client_manager.dart';
@@ -26,7 +27,9 @@ class OperationManager {
 
   static update() async {
     final db = await DatabaseManager.db.database;
-    var res = await db.query("Operation", where: "client_id == ?", whereArgs: [ClientManager.currentClientID]);
+    var now = DateTime.now();
+    var res = await db.query("Operation", where: "client_id == ?", whereArgs: [ClientManager.currentClient.id,
+      /*DateFormat('yyyy-MM').format(now).toString() + "-1 00:00:00", DateFormat('yyyy-MM').format(DateTime(now.year, now.month+1)).toString() + "-1 00:00:00"*/]);
     print (res);
     List<Operation> _operations =
     res.isNotEmpty ? res.map((json) => Operation.fromJson(json)).toList() : [];
@@ -79,6 +82,13 @@ class OperationManager {
     for (var element in operations) {if(element.category == category) expenseSum += element.sum;}
     return expenseSum;
   }
+
+  static List<Operation> getOperationsWithCategory(String category) {
+    var tempOperations = List<Operation>.empty(growable: true);
+    operations.forEach((element) {if(element.category == category) tempOperations.add(element);});
+    return tempOperations;
+  }
+
   static int getOperationsCountWithCategory(String category) {
     int incomeCount = 0;
     for (var element in operations) {if(element.category == category) incomeCount++;}
@@ -99,9 +109,9 @@ class OperationManager {
     return res;
   }
 
-  static deleteOperation(int id) async {
+  static deleteOperation(String name, String date) async {
     final db = await DatabaseManager.db.database;
-    db.delete("Operation", where: "id = ?", whereArgs: [id]);
+    db.delete("Operation", where: "name = ? AND date = ?", whereArgs: [name, date]);
     await update();
   }
 }

@@ -29,7 +29,7 @@ class DatabaseManager {
         "id"	INTEGER NOT NULL,
         "name"	TEXT NOT NULL,
         "sum"	REAL NOT NULL,
-        "date"	TEXT NOT NULL,
+        "date"	DATETIME NOT NULL,
         "category"	TEXT NOT NULL,
         "type"	TEXT CHECK("type" in ("income", "expense")),
         "client_id"	INTEGER NOT NULL,

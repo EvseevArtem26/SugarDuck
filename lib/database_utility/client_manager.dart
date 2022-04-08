@@ -2,7 +2,7 @@ import 'package:sugar_duck/database/databaseManager.dart';
 import 'package:sugar_duck/database_entities/client.dart';
 
 class ClientManager {
-  static int currentClientID = -1;
+  static Client currentClient = Client.empty();
   static bool isConfirmed = false;
 
   static newClient(Client newClient) async {
@@ -13,7 +13,7 @@ class ClientManager {
     int id = 0;
     if (t != null)
     {
-      int id = int.parse(t.toString());
+      id = int.parse(t.toString());
     }
 
     newClient.id = id;
@@ -25,6 +25,7 @@ class ClientManager {
   static findEmail(String email) async {
     final db = await DatabaseManager.db.database;
     var res = await db.query("Client", where: "email = ?", whereArgs: [email]);
+    getAllClients();
     return res.isNotEmpty;
   }
 
@@ -40,13 +41,16 @@ class ClientManager {
     var res = await db.query("Client",
         where: "email = ? AND password = ?", whereArgs: [email, password]);
     isConfirmed = res.isNotEmpty;
-    currentClientID = int.parse(res.first["id"].toString());
-    print("Client id $currentClientID");
+    if (isConfirmed) {
+      currentClient = Client.fromJson(res.first);
+      print("Client is ${currentClient.toJson()}");
+    }
   }
 
   static getAllClients() async {
     final db = await DatabaseManager.db.database;
     var res = await db.query("Client");
+    print(res);
     List<Client> clients =
         res.isNotEmpty ? res.map((json) => Client.fromJson(json)).toList() : [];
     return clients;

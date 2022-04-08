@@ -4,32 +4,47 @@ import 'package:sugar_duck/database_utility/client_manager.dart';
 
 import 'database_entities/client.dart';
 
-class RegistrationPage extends StatelessWidget {
+class Registration extends StatefulWidget {
+  const Registration({Key? key}) : super(key: key);
+
+
+  @override
+  State<Registration> createState() => _Registration();
+}
+
+class _Registration extends State<Registration> {
+  String email = "";
+  String password = "";
+  String checkingPassword = "";
+
+  String error = "test";
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
 
-  const RegistrationPage({Key? key}) : super(key: key);
+  register() async {
+    print("$email $password $checkingPassword");
+    if (checkingPassword != password) {
+      print("Failed to validate password");
+      setState(() {
+        error = "Пароли не совпадают";
+      });
+      return;
+    }
+    if (!await ClientManager.findEmail(email)) {
+      Client client =
+      Client(id: 0, email: email, password: password, currency: "RUB");
+
+      ClientManager.newClient(client);
+      Navigator.popAndPushNamed(context, "/auth");
+      return;
+    }
+    setState(() {
+      error = "Такой пользователь уже есть";
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    String email = "";
-    String password = "";
-    String checkingPassword = "";
-
-    register() async {
-      print("$email $password $checkingPassword");
-      if (checkingPassword != password) {
-        print("Failed to validate password");
-        return;
-      }
-      if (!await ClientManager.findEmail(email)) {
-        Client client =
-            Client(id: 0, email: email, password: password, currency: "RUB");
-
-        ClientManager.newClient(client);
-        Navigator.popAndPushNamed(context, "/auth");
-      }
-    }
-
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(255, 26, 26, 46),
@@ -143,6 +158,12 @@ class RegistrationPage extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       color: const Color.fromARGB(255, 255, 255, 255)),
                 )),
+                Text(error,
+                  style: GoogleFonts.manrope(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromARGB(255, 255, 255, 255)),
+                )
           ])),
         ),
       ),

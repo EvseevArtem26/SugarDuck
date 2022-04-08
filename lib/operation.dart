@@ -3,6 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:sugar_duck/database_entities/operation.dart';
 import 'package:sugar_duck/database_utility/client_manager.dart';
 import 'package:sugar_duck/database_utility/operation_manager.dart';
+import 'package:intl/intl.dart';
 
 class OperationPage extends StatefulWidget {
   String type;
@@ -24,13 +25,13 @@ class _OperationPageState extends State<OperationPage> {
       "Зарплата",
       "Подарки",
       "Пособия",
-      "Другие доходы"
+      "Прочие доходы"
     ],
     "expense": [
       "Еда и питание",
       "Одежда",
       "Развлечения",
-      "Другие расходы"
+      "Прочие расходы"
     ]
   };
   late String selectedCategory = categories[type]![0];
@@ -39,8 +40,11 @@ class _OperationPageState extends State<OperationPage> {
     operation.category = OperationManager.nameInDataBase[selectedCategory] ?? "undefined";
     operation.type = type;
     if (type == "expense") operation.sum *= -1;
-    operation.client = ClientManager.currentClientID;
-    operation.date = DateTime.now().toString();
+    operation.client = ClientManager.currentClient.id;
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
+    final String formatted = formatter.format(now);
+    operation.date = formatted;
     OperationManager.newOperation(operation);
     await OperationManager.update();
     Navigator.popAndPushNamed(context, "/home");

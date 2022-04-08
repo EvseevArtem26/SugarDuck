@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sugar_duck/database_utility/operation_manager.dart';
 
 
 class Category extends StatelessWidget {
@@ -28,7 +29,7 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){Navigator.pushNamed(context, '/category');},
+      onTap: (){Navigator.pushNamed(context, '/category_' + (OperationManager.nameInDataBase[title] ?? "undefined"));},
       child: Container(
         width: width,
         height: height,
