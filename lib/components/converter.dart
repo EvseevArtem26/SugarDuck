@@ -14,7 +14,7 @@ class _ConverterState extends State<Converter> {
   late List<String> selectedCurrencies = ["USD", "RUB"];
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController amountController = TextEditingController();
+  String amountController = "";
   TextEditingController resultController = TextEditingController();
 
   double conversionRate = 1;
@@ -47,7 +47,6 @@ class _ConverterState extends State<Converter> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextFormField(
-                  controller: amountController,
                   decoration: const InputDecoration(
                     constraints: BoxConstraints.tightFor(
                       width: 180,
@@ -81,13 +80,14 @@ class _ConverterState extends State<Converter> {
                   ),
                   keyboardType: const TextInputType.numberWithOptions(decimal:true),
                   onChanged: (String? value) {
-                    amountController.text = value!;
+                    amountController = value!;
                     updateResultField();
                   },
                 ),
                 SizedBox(
                   width: 125,
                   child: DropdownButtonFormField2<String>(
+                    value: selectedCurrencies[0],
                     onChanged: (String? newValue){
                       setState(
                         (){selectedCurrencies[0] = newValue!;}
@@ -172,6 +172,7 @@ class _ConverterState extends State<Converter> {
                 SizedBox(
                   width: 125,
                   child: DropdownButtonFormField2<String>(
+                    value: selectedCurrencies[1],
                     onChanged: (String? newValue){
                       setState(
                         (){selectedCurrencies[1] = newValue!;}
@@ -240,7 +241,7 @@ class _ConverterState extends State<Converter> {
     setState(
       (){
         conversionRate = rate;
-        resultController.text = (double.parse(amountController.text) * conversionRate).toStringAsFixed(2);
+        resultController.text = (double.parse(amountController) * conversionRate).toStringAsFixed(2);
       }
     );
   }
