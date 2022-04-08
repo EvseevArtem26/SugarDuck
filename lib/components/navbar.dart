@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget{
-    const NavBar({Key? key}) : super(key: key);
+    const NavBar({Key? key, required this.initialIndex}) : super(key: key);
+    final int initialIndex;
 
     @override
     State<NavBar> createState() => _NavBarState();
@@ -23,8 +24,7 @@ class _NavBarState extends State<NavBar>{
     return BottomNavigationBar(
       
         type: BottomNavigationBarType.fixed,
-        key: GlobalKey(),
-        currentIndex: _bottomNavBarIndex,
+        currentIndex: widget.initialIndex,
         onTap: (int index) {
           setState(() {
             _bottomNavBarIndex = index;

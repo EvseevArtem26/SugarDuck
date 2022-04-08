@@ -260,6 +260,6 @@ class _AccountPageState extends State<AccountPage> {
             ]
         )
     ),
-    bottomNavigationBar: NavBar()
+    bottomNavigationBar: NavBar(initialIndex: 4,)
   );
 }

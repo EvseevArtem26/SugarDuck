@@ -14,7 +14,9 @@ class _ConverterState extends State<Converter> {
   late List<String> selectedCurrencies = ["USD", "RUB"];
   final _formKey = GlobalKey<FormState>();
 
-  String amountController = "";
+  TextEditingController amountController = TextEditingController(
+    text: "1"
+  );
   TextEditingController resultController = TextEditingController();
 
   double conversionRate = 1;
@@ -80,7 +82,7 @@ class _ConverterState extends State<Converter> {
                   ),
                   keyboardType: const TextInputType.numberWithOptions(decimal:true),
                   onChanged: (String? value) {
-                    amountController = value!;
+                    amountController.text = value!;
                     updateResultField();
                   },
                 ),
@@ -141,7 +143,7 @@ class _ConverterState extends State<Converter> {
                       height: 40
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    focusedBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                         width: 2,
@@ -241,7 +243,7 @@ class _ConverterState extends State<Converter> {
     setState(
       (){
         conversionRate = rate;
-        resultController.text = (double.parse(amountController) * conversionRate).toStringAsFixed(2);
+        resultController.text = (double.parse(amountController.text) * conversionRate).toStringAsFixed(2);
       }
     );
   }
